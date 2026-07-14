@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="shortcut icon"
+      href="/assets/images/favicon.svg"
+      type="image/x-icon"
+    />
+    <title>Saldo Vacaciones | SIAV</title>
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/lineicons.css" />
+    <link rel="stylesheet" href="/assets/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+  </head>
+
+  <body>
+    <div id="preloader">
+      <div class="spinner"></div>
+    </div>
+
+    <aside class="sidebar-nav-wrapper">
+      <div class="navbar-logo">
+        <a href="/index">
+          <img src="/assets/images/logo/logo.svg" alt="logo" />
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="nav-item">
+            <a href="/index">
+              <span class="icon"><i class="lni lni-home"></i></span>
+              <span class="text">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/rol">
+              <span class="icon"><i class="lni lni-shield"></i></span>
+              <span class="text">Roles</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/usuario">
+              <span class="icon"><i class="lni lni-users"></i></span>
+              <span class="text">Usuarios</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/estadoSolicitud">
+              <span class="icon"><i class="lni lni-tag"></i></span>
+              <span class="text">Estado Solicitud</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/solicitud">
+              <span class="icon"><i class="lni lni-files"></i></span>
+              <span class="text">Solicitudes</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/saldoVacaciones" class="active">
+              <span class="icon"><i class="lni lni-calendar"></i></span>
+              <span class="text">Saldo Vacaciones</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/movimientoSaldo">
+              <span class="icon"><i class="lni lni-transfer"></i></span>
+              <span class="text">Movimiento Saldo</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/historialEstados">
+              <span class="icon"><i class="lni lni-timer"></i></span>
+              <span class="text">Historial Estados</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/notificacion">
+              <span class="icon"><i class="lni lni-alarm"></i></span>
+              <span class="text">Notificaciones</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div class="overlay"></div>
+
+    <main class="main-wrapper">
+      <header class="header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 col-6">
+              <div class="header-left d-flex align-items-center">
+                <div class="menu-toggle-btn mr-15">
+                  <button
+                    id="menu-toggle"
+                    class="main-btn primary-btn btn-hover"
+                  >
+                    <i class="lni lni-chevron-left me-2"></i>
+                    Menu
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-7 col-md-7 col-6">
+              <div class="header-right">
+                <div class="profile-box ml-15">
+                  <button
+                    class="dropdown-toggle bg-transparent border-0"
+                    type="button"
+                    id="profile"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <div class="profile-info">
+                      <div class="info">
+                        <div class="image">
+                          <img
+                            src="/assets/images/profile/profile-image.png"
+                            alt=""
+                          />
+                        </div>
+
+                        <div>
+                          <h6 class="fw-500">Administrador</h6>
+
+                          <p>Admin</p>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a href="/login">
+                        <i class="lni lni-exit"></i>
+                        Cerrar Sesión
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="container-fluid">
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>Saldo Vacaciones</h2>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="/index"> Dashboard </a>
+                      </li>
+
+                      <li class="breadcrumb-item active">Saldo Vacaciones</li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tables-wrapper">
+            <div class="row">
+              <div class="col-12">
+                <div class="card-style mb-30">
+                  <div
+                    class="d-flex align-items-center justify-content-between mb-20"
+                  >
+                    <h6 class="mb-0">Lista Saldo Vacaciones</h6>
+
+                    <a
+                      href="/saldoVacaciones/crearSaldoVacaciones"
+                      class="main-btn primary-btn btn-hover btn-sm"
+                    >
+                      <i class="lni lni-plus me-1"></i>
+                      Crear Saldo Vacaciones
+                    </a>
+                  </div>
+
+                  <div class="table-wrapper table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+
+                          <th>ID</th>
+
+                          <th>Usuario</th>
+
+                          <th>Días Disponibles</th>
+
+                          <th>Periodo</th>
+
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td colspan="6" class="text-center text-muted py-4">
+                            No hay registros disponibles.
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6 order-last order-md-first">
+              <div class="copyright text-center text-md-start">
+                <p class="text-sm">
+                  SIAV &mdash; Sistema de Administración de Vacaciones &copy;
+                  2026
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>
