@@ -3,6 +3,8 @@ package com.siav_pisip.siav_web.service.impl;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import com.siav_pisip.siav_web.model.dto.request.RolRequestDto;
 import com.siav_pisip.siav_web.model.dto.response.RolResponseDto;
 import com.siav_pisip.siav_web.service.IRolService;
 
@@ -18,6 +20,12 @@ public class RolServiceImpl implements IRolService {
 	public List<RolResponseDto> listarRoles() {
 
 		return webclient.get().uri("/rol").retrieve().bodyToFlux(RolResponseDto.class).collectList().block();
+	}
+
+	@Override
+	public void guardarRol(RolRequestDto nuevoRol) {
+
+		webclient.post().uri("/rol").bodyValue(nuevoRol).retrieve().toBodilessEntity().block();
 	}
 
 }

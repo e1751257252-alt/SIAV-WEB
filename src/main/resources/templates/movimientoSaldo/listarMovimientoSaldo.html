@@ -3,11 +3,79 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="/plantilla/plantillaui">
 <head>
-<title>Roles</title>
+<title>Movimiento Saldo</title>
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
-		<h2>Movimiento de Saldos</h2>
+
+		<div class="title-wrapper pt-30">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<div class="title">
+						<h2>Movimiento Saldo</h2>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="breadcrumb-wrapper">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Movimiento
+									Saldo</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tables-wrapper">
+			<div class="row">
+				<div class="col-12">
+					<div class="card-style mb-30">
+						<div
+							class="d-flex align-items-center justify-content-between mb-20">
+							<h6 class="mb-0">Lista Movimientos de Saldo</h6>
+							<a th:href="@{/movimientoSaldo/crearMovimientoSaldo}"
+								class="main-btn primary-btn btn-hover btn-sm"> <i
+								class="lni lni-plus me-1"></i> Crear Movimiento
+							</a>
+						</div>
+						<div class="table-wrapper table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>ID Saldo</th>
+										<th>ID Solicitud</th>
+										<th>Tipo</th>
+										<th>Días</th>
+										<th>Fecha</th>
+										<th>Descripción</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="indice: ${listamovimientos}">
+										<td th:text="${indice.idMovimiento}"></td>
+										<td th:text="${indice.idSaldo}"></td>
+										<td th:text="${indice.idSolicitud}"></td>
+										<td th:text="${indice.tipoMovimiento}"></td>
+										<td th:text="${indice.dias}"></td>
+										<td th:text="${indice.fechaMovimiento}"></td>
+										<td th:text="${indice.descripcion}"></td>
+										<td><a href="" class="btn btn-light"><i
+												class="lni lni-pencil"></i></a> <a href="" class="btn btn-light"><i
+												class="lni lni-trash-can"></i></a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </body>
 </html>

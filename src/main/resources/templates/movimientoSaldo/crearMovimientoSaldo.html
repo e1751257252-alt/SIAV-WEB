@@ -3,11 +3,63 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="/plantilla/plantillaui">
 <head>
-<title>Roles</title>
+<title>Crear Movimiento Saldo</title>
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
-		<h2>Crear Movimiento de Saldos</h2>
+
+		<div class="title-wrapper pt-30">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<div class="title">
+						<h2>Crear Movimiento Saldo</h2>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="breadcrumb-wrapper">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item"><a
+									th:href="@{/movimientoSaldo}">Movimiento Saldo</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Crear</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-style mb-30">
+			<form th:action="@{/movimientoSaldo/guardar}"
+				th:object="${movimiento}" method="post">
+				<div class="mb-3">
+					<label for="idSaldo">ID Saldo</label> <input type="number"
+						th:field="*{idSaldo}" class="form-control" id="idSaldo">
+				</div>
+				<div class="mb-3">
+					<label for="idSolicitud">ID Solicitud</label> <input type="number"
+						th:field="*{idSolicitud}" class="form-control" id="idSolicitud">
+				</div>
+				<div class="mb-3">
+					<label for="tipoMovimiento">Tipo de Movimiento</label> <input
+						type="text" th:field="*{tipoMovimiento}" class="form-control"
+						id="tipoMovimiento">
+				</div>
+				<div class="mb-3">
+					<label for="dias">Días</label> <input type="number"
+						th:field="*{dias}" class="form-control" id="dias">
+				</div>
+				<div class="mb-3">
+					<label for="descripcion">Descripción</label> <input type="text"
+						th:field="*{descripcion}" class="form-control" id="descripcion">
+				</div>
+				<button type="submit" class="main-btn primary-btn btn-hover">
+					<i class="lni lni-save me-1"></i> Guardar
+				</button>
+			</form>
+		</div>
+
 	</div>
 </body>
 </html>

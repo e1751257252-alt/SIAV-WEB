@@ -3,11 +3,81 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="/plantilla/plantillaui">
 <head>
-<title>Roles</title>
+<title>Historial Estados</title>
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
-		<h2>Historial de Estados</h2>
+
+		<div class="title-wrapper pt-30">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<div class="title">
+						<h2>Historial Estados</h2>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="breadcrumb-wrapper">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Historial
+									Estados</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tables-wrapper">
+			<div class="row">
+				<div class="col-12">
+					<div class="card-style mb-30">
+						<div
+							class="d-flex align-items-center justify-content-between mb-20">
+							<h6 class="mb-0">Lista Historial de Estados</h6>
+							<a th:href="@{/historialEstados/crearHistorialEstados}"
+								class="main-btn primary-btn btn-hover btn-sm"> <i
+								class="lni lni-plus me-1"></i> Crear Historial
+							</a>
+						</div>
+						<div class="table-wrapper table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>ID Solicitud</th>
+										<th>Estado Anterior</th>
+										<th>Estado Nuevo</th>
+										<th>Responsable</th>
+										<th>Fecha Cambio</th>
+										<th>Observaciones</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="indice: ${listahistorial}">
+										<td th:text="${indice.idHistorial}"></td>
+										<td th:text="${indice.idSolicitud}"></td>
+										<td
+											th:text="${indice.estadoAnterior != null ? indice.estadoAnterior.nombre : '-'}"></td>
+										<td
+											th:text="${indice.estadoNuevo != null ? indice.estadoNuevo.nombre : '-'}"></td>
+										<td th:text="${indice.nombresUsuarioResponsable}"></td>
+										<td th:text="${indice.fechaCambio}"></td>
+										<td th:text="${indice.observaciones}"></td>
+										<td><a href="" class="btn btn-light"><i
+												class="lni lni-pencil"></i></a> <a href="" class="btn btn-light"><i
+												class="lni lni-trash-can"></i></a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </body>
 </html>

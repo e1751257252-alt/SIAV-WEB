@@ -3,11 +3,76 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="/plantilla/plantillaui">
 <head>
-<title>Roles</title>
+<title>Notificaciones</title>
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
-		<h2>Notificaciones</h2>
+
+		<div class="title-wrapper pt-30">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<div class="title">
+						<h2>Notificaciones</h2>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="breadcrumb-wrapper">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Notificaciones</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="tables-wrapper">
+			<div class="row">
+				<div class="col-12">
+					<div class="card-style mb-30">
+						<div
+							class="d-flex align-items-center justify-content-between mb-20">
+							<h6 class="mb-0">Lista Notificaciones</h6>
+							<a th:href="@{/notificacion/crearNotificacion}"
+								class="main-btn primary-btn btn-hover btn-sm"> <i
+								class="lni lni-plus me-1"></i> Crear Notificación
+							</a>
+						</div>
+						<div class="table-wrapper table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Usuario Destino</th>
+										<th>ID Solicitud</th>
+										<th>Tipo</th>
+										<th>Mensaje</th>
+										<th>Leído</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="indice: ${listanotificaciones}">
+										<td th:text="${indice.idNotificacion}"></td>
+										<td th:text="${indice.nombresUsuarioDestino}"></td>
+										<td th:text="${indice.idSolicitud}"></td>
+										<td th:text="${indice.tipoNotificacion}"></td>
+										<td th:text="${indice.mensaje}"></td>
+										<td th:text="${indice.leido}"></td>
+										<td><a href="" class="btn btn-light"><i
+												class="lni lni-pencil"></i></a> <a href="" class="btn btn-light"><i
+												class="lni lni-trash-can"></i></a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </body>
 </html>

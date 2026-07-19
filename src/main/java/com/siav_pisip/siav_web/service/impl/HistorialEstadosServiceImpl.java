@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.siav_pisip.siav_web.model.dto.request.HistorialEstadosRequestDto;
 import com.siav_pisip.siav_web.model.dto.response.HistorialEstadosResponseDto;
 import com.siav_pisip.siav_web.service.IHistorialEstadosService;
 
@@ -19,9 +20,13 @@ public class HistorialEstadosServiceImpl implements IHistorialEstadosService {
 
 	@Override
 	public List<HistorialEstadosResponseDto> listarHistorialEstados() {
-
 		return webclient.get().uri("/historial-estados").retrieve().bodyToFlux(HistorialEstadosResponseDto.class)
 				.collectList().block();
+	}
+
+	@Override
+	public void guardarHistorialEstados(HistorialEstadosRequestDto nuevoHistorial) {
+		webclient.post().uri("/historial-estados").bodyValue(nuevoHistorial).retrieve().toBodilessEntity().block();
 	}
 
 }

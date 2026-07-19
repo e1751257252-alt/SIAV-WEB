@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.siav_pisip.siav_web.model.dto.request.MovimientoSaldoRequestDto;
 import com.siav_pisip.siav_web.model.dto.response.MovimientoSaldoResponseDto;
 import com.siav_pisip.siav_web.service.IMovimientoSaldoService;
 
@@ -19,9 +20,13 @@ public class MovimientoSaldoServiceImpl implements IMovimientoSaldoService {
 
 	@Override
 	public List<MovimientoSaldoResponseDto> listarMovimientosSaldo() {
-
 		return webclient.get().uri("/movimiento-saldo").retrieve().bodyToFlux(MovimientoSaldoResponseDto.class)
 				.collectList().block();
+	}
+
+	@Override
+	public void guardarMovimientoSaldo(MovimientoSaldoRequestDto nuevoMovimiento) {
+		webclient.post().uri("/movimiento-saldo").bodyValue(nuevoMovimiento).retrieve().toBodilessEntity().block();
 	}
 
 }
