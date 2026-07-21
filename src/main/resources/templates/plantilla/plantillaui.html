@@ -5,8 +5,8 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="shortcut icon" th:href="@{/assets/images/favicon.svg}"
-	type="image/x-icon" />
+<link rel="shortcut icon" th:href="@{/assets/images/favicon.png}"
+	type="image/png" />
 <title layout:title-pattern="$CONTENT_TITLE | SIAV">SIAV</title>
 <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="@{/assets/css/lineicons.css}" />
@@ -20,9 +20,10 @@
 	</div>
 
 	<aside class="sidebar-nav-wrapper">
-		<div class="navbar-logo">
+		<div class="navbar-logo" style="text-align: center;">
 			<a th:href="@{/index}"> <img
-				th:src="@{/assets/images/logo/logo.svg}" alt="logo" />
+				th:src="@{/assets/images/logo/logo-siav.png}" alt="Logo SIAV"
+				style="max-height: 55px; width: auto;" />
 			</a>
 		</div>
 		<nav class="sidebar-nav">
