@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="/plantilla/plantillaui">
 <head>
-<title>Movimiento Saldo</title>
+<title>Solicitudes de mi equipo</title>
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
@@ -12,7 +12,7 @@
 			<div class="row align-items-center">
 				<div class="col-md-6">
 					<div class="title">
-						<h2>Movimiento Saldo</h2>
+						<h2>Solicitudes de mi equipo</h2>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -20,8 +20,8 @@
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Movimiento
-									Saldo</li>
+								<li class="breadcrumb-item active" aria-current="page">Mi
+									equipo</li>
 							</ol>
 						</nav>
 					</div>
@@ -35,44 +35,46 @@
 					<div class="card-style mb-30">
 						<div
 							class="d-flex align-items-center justify-content-between mb-20">
-							<h6 class="mb-0">Lista Movimientos de Saldo</h6>
-							<a th:href="@{/movimientoSaldo/crearMovimientoSaldo}"
-								class="main-btn primary-btn btn-hover btn-sm"> <i
-								class="lni lni-plus me-1"></i> Crear Movimiento
-							</a>
+							<h6 class="mb-0">Pendientes de mi aprobación</h6>
 						</div>
 						<div class="table-wrapper table-responsive">
 							<table class="table">
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>ID Saldo</th>
-										<th>ID Solicitud</th>
-										<th>Tipo</th>
+										<th>Usuario</th>
+										<th>Fecha Inicio</th>
+										<th>Fecha Fin</th>
 										<th>Días</th>
-										<th>Fecha</th>
-										<th>Descripción</th>
+										<th>Motivo</th>
 										<th>Acciones</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="indice: ${listamovimientos}">
-										<td th:text="${indice.idMovimiento}"></td>
-										<td th:text="${indice.idSaldo}"></td>
+									<tr th:each="indice: ${listapendientes}">
 										<td th:text="${indice.idSolicitud}"></td>
-										<td th:text="${indice.tipoMovimiento}"></td>
-										<td th:text="${indice.dias}"></td>
-										<td th:text="${indice.fechaMovimiento}"></td>
-										<td th:text="${indice.descripcion}"></td>
+										<td
+											th:text="${indice.nombresUsuario} + ' ' + ${indice.apellidosUsuario}"></td>
+										<td th:text="${indice.fechaInicio}"></td>
+										<td th:text="${indice.fechaFin}"></td>
+										<td th:text="${indice.diasSolicitados}"></td>
+										<td th:text="${indice.motivo}"></td>
 										<td>
-											<a th:href="@{/movimientoSaldo/editarMovimientoSaldo/{id}(id=${indice.idMovimiento})}"
-												class="btn btn-light"><i class="lni lni-pencil"></i></a>
-											<form th:action="@{/movimientoSaldo/desactivar/{id}(id=${indice.idMovimiento})}"
+											<form th:action="@{/solicitud/aprobar/{id}(id=${indice.idSolicitud})}"
 												method="post" style="display: inline;">
-												<button type="submit" class="btn btn-light"><i
-													class="lni lni-trash-can"></i></button>
+												<button type="submit" class="btn btn-light text-success"><i
+													class="lni lni-checkmark-circle"></i> Aprobar</button>
+											</form>
+											<form th:action="@{/solicitud/rechazar/{id}(id=${indice.idSolicitud})}"
+												method="post" style="display: inline;">
+												<button type="submit" class="btn btn-light text-danger"><i
+													class="lni lni-close"></i> Rechazar</button>
 											</form>
 										</td>
+									</tr>
+									<tr th:if="${#lists.isEmpty(listapendientes)}">
+										<td colspan="7">No tienes solicitudes pendientes por
+											aprobar.</td>
 									</tr>
 								</tbody>
 							</table>

@@ -33,13 +33,23 @@
 			<form th:action="@{/notificacion/guardar}"
 				th:object="${notificacion}" method="post">
 				<div class="mb-3">
-					<label for="idUsuarioDestino">ID Usuario Destino</label> <input
-						type="number" th:field="*{idUsuarioDestino}" class="form-control"
+					<label for="idUsuarioDestino">Usuario Destino</label>
+					<select th:field="*{idUsuarioDestino}" class="form-control"
 						id="idUsuarioDestino">
+						<option value="">Seleccione un usuario</option>
+						<option th:each="usuario : ${listausuarios}"
+							th:value="${usuario.idUsuario}"
+							th:text="${usuario.nombres} + ' ' + ${usuario.apellidos}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
-					<label for="idSolicitud">ID Solicitud</label> <input type="number"
-						th:field="*{idSolicitud}" class="form-control" id="idSolicitud">
+					<label for="idSolicitud">Solicitud</label>
+					<select th:field="*{idSolicitud}" class="form-control" id="idSolicitud">
+						<option value="">Sin solicitud asociada</option>
+						<option th:each="solicitud : ${listasolicitudes}"
+							th:value="${solicitud.idSolicitud}"
+							th:text="'#' + ${solicitud.idSolicitud} + ' - ' + ${solicitud.nombresUsuario} + ' ' + ${solicitud.apellidosUsuario}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
 					<label for="tipoNotificacion">Tipo de Notificación</label> <input

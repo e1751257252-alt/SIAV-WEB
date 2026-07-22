@@ -67,9 +67,15 @@
 										<td th:text="${indice.nombreJefe}"></td>
 										<td th:text="${indice.cargo}"></td>
 										<td th:text="${indice.activo}"></td>
-										<td><a href="" class="btn btn-light"><i
-												class="lni lni-pencil"></i></a> <a href="" class="btn btn-light"><i
-												class="lni lni-trash-can"></i></a></td>
+										<td>
+											<a th:href="@{/usuario/editarUsuario/{id}(id=${indice.idUsuario})}"
+												class="btn btn-light"><i class="lni lni-pencil"></i></a>
+											<form th:action="@{/usuario/desactivar/{id}(id=${indice.idUsuario})}"
+												method="post" style="display: inline;">
+												<button type="submit" class="btn btn-light"><i
+													class="lni lni-trash-can"></i></button>
+											</form>
+										</td>
 									</tr>
 								</tbody>
 							</table>

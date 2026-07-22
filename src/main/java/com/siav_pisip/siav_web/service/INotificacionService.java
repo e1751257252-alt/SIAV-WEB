@@ -10,4 +10,8 @@ public interface INotificacionService {
 	List<NotificacionResponseDto> listarNotificaciones();
 
 	void guardarNotificacion(NotificacionRequestDto nuevaNotificacion);
+
+	NotificacionResponseDto buscarPorId(Long idNotificacion);
+
+	void desactivarNotificacion(Long idNotificacion);
 }

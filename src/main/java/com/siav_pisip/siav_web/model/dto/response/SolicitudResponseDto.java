@@ -23,4 +23,5 @@ public class SolicitudResponseDto {
 	private String nombresAprobador;
 	private LocalDateTime fechaResolucion;
 	private String observacionesAprobador;
+	private Boolean activo;
 }

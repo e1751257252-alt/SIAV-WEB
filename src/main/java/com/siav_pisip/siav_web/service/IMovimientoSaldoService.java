@@ -9,5 +9,9 @@ public interface IMovimientoSaldoService {
 
 	List<MovimientoSaldoResponseDto> listarMovimientosSaldo();
 
+	MovimientoSaldoResponseDto buscarPorId(Long idMovimiento);
+
 	void guardarMovimientoSaldo(MovimientoSaldoRequestDto nuevoMovimiento);
+
+	void desactivarMovimientoSaldo(Long idMovimiento);
 }

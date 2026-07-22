@@ -34,12 +34,21 @@
 			<form th:action="@{/movimientoSaldo/guardar}"
 				th:object="${movimiento}" method="post">
 				<div class="mb-3">
-					<label for="idSaldo">ID Saldo</label> <input type="number"
-						th:field="*{idSaldo}" class="form-control" id="idSaldo">
+					<label for="idSaldo">Saldo</label>
+					<select th:field="*{idSaldo}" class="form-control" id="idSaldo">
+						<option value="">Seleccione un saldo</option>
+						<option th:each="saldo : ${listasaldos}" th:value="${saldo.idSaldo}"
+							th:text="${saldo.nombresUsuario} + ' ' + ${saldo.apellidosUsuario} + ' - ' + ${saldo.anio}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
-					<label for="idSolicitud">ID Solicitud</label> <input type="number"
-						th:field="*{idSolicitud}" class="form-control" id="idSolicitud">
+					<label for="idSolicitud">Solicitud</label>
+					<select th:field="*{idSolicitud}" class="form-control" id="idSolicitud">
+						<option value="">Sin solicitud asociada</option>
+						<option th:each="solicitud : ${listasolicitudes}"
+							th:value="${solicitud.idSolicitud}"
+							th:text="'#' + ${solicitud.idSolicitud} + ' - ' + ${solicitud.nombresUsuario} + ' ' + ${solicitud.apellidosUsuario}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
 					<label for="tipoMovimiento">Tipo de Movimiento</label> <input

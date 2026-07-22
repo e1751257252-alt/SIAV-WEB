@@ -3,11 +3,75 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="/plantilla/plantillaui">
 <head>
-<title>Roles</title>
+<title>Editar Notificación</title>
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
-		<h2>Editar Notificaciones</h2>
+
+		<div class="title-wrapper pt-30">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<div class="title">
+						<h2>Editar Notificación</h2>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="breadcrumb-wrapper">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/notificacion}">Notificaciones</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Editar</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-style mb-30">
+			<form th:action="@{/notificacion/guardar}"
+				th:object="${notificacion}" method="post">
+				<input type="hidden" th:field="*{idNotificacion}">
+				<div class="mb-3">
+					<label for="idUsuarioDestino">Usuario Destino</label>
+					<select th:field="*{idUsuarioDestino}" class="form-control"
+						id="idUsuarioDestino">
+						<option value="">Seleccione un usuario</option>
+						<option th:each="usuario : ${listausuarios}"
+							th:value="${usuario.idUsuario}"
+							th:text="${usuario.nombres} + ' ' + ${usuario.apellidos}"></option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="idSolicitud">Solicitud</label>
+					<select th:field="*{idSolicitud}" class="form-control" id="idSolicitud">
+						<option value="">Sin solicitud asociada</option>
+						<option th:each="solicitud : ${listasolicitudes}"
+							th:value="${solicitud.idSolicitud}"
+							th:text="'#' + ${solicitud.idSolicitud} + ' - ' + ${solicitud.nombresUsuario} + ' ' + ${solicitud.apellidosUsuario}"></option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="tipoNotificacion">Tipo de Notificación</label> <input
+						type="text" th:field="*{tipoNotificacion}" class="form-control"
+						id="tipoNotificacion">
+				</div>
+				<div class="mb-3">
+					<label for="mensaje">Mensaje</label> <input type="text"
+						th:field="*{mensaje}" class="form-control" id="mensaje">
+				</div>
+				<div class="mb-3 form-check">
+					<input type="checkbox" class="form-check-input" id="leido"
+						th:field="*{leido}"> <label class="form-check-label"
+						for="leido">Leído</label>
+				</div>
+				<button type="submit" class="main-btn primary-btn btn-hover">
+					<i class="lni lni-save me-1"></i> Guardar
+				</button>
+			</form>
+		</div>
+
 	</div>
 </body>
 </html>

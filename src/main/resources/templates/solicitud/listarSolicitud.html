@@ -66,9 +66,15 @@
 										<td th:text="${indice.motivo}"></td>
 										<td th:text="${indice.nombreEstado}"></td>
 										<td th:text="${indice.nombresAprobador}"></td>
-										<td><a href="" class="btn btn-light"><i
-												class="lni lni-pencil"></i></a> <a href="" class="btn btn-light"><i
-												class="lni lni-trash-can"></i></a></td>
+										<td>
+											<a th:href="@{/solicitud/editarSolicitud/{id}(id=${indice.idSolicitud})}"
+												class="btn btn-light"><i class="lni lni-pencil"></i></a>
+											<form th:action="@{/solicitud/desactivar/{id}(id=${indice.idSolicitud})}"
+												method="post" style="display: inline;">
+												<button type="submit" class="btn btn-light"><i
+													class="lni lni-trash-can"></i></button>
+											</form>
+										</td>
 									</tr>
 								</tbody>
 							</table>

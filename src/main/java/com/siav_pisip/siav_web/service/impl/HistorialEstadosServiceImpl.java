@@ -29,4 +29,15 @@ public class HistorialEstadosServiceImpl implements IHistorialEstadosService {
 		webclient.post().uri("/historial-estados").bodyValue(nuevoHistorial).retrieve().toBodilessEntity().block();
 	}
 
+	@Override
+	public HistorialEstadosResponseDto buscarPorId(Long idHistorial) {
+		return webclient.get().uri("/historial-estados/{id}", idHistorial).retrieve()
+				.bodyToMono(HistorialEstadosResponseDto.class).block();
+	}
+
+	@Override
+	public void desactivarHistorialEstados(Long idHistorial) {
+		webclient.delete().uri("/historial-estados/{id}", idHistorial).retrieve().toBodilessEntity().block();
+	}
+
 }

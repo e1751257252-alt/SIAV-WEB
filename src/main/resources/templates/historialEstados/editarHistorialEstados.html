@@ -3,11 +3,85 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="/plantilla/plantillaui">
 <head>
-<title>Roles</title>
+<title>Editar Historial Estados</title>
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
-		<h2>Editar Historial de Estados</h2>
+
+		<div class="title-wrapper pt-30">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<div class="title">
+						<h2>Editar Historial Estados</h2>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="breadcrumb-wrapper">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item"><a
+									th:href="@{/historialEstados}">Historial Estados</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Editar</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-style mb-30">
+			<form th:action="@{/historialEstados/guardar}"
+				th:object="${historial}" method="post">
+				<input type="hidden" th:field="*{idHistorial}">
+				<div class="mb-3">
+					<label for="idSolicitud">Solicitud</label>
+					<select th:field="*{idSolicitud}" class="form-control" id="idSolicitud">
+						<option value="">Seleccione una solicitud</option>
+						<option th:each="solicitud : ${listasolicitudes}"
+							th:value="${solicitud.idSolicitud}"
+							th:text="'#' + ${solicitud.idSolicitud} + ' - ' + ${solicitud.nombresUsuario} + ' ' + ${solicitud.apellidosUsuario}"></option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="idEstadoAnterior">Estado Anterior</label>
+					<select th:field="*{estadoAnterior.idEstado}" class="form-control"
+						id="idEstadoAnterior">
+						<option value="">Sin estado anterior</option>
+						<option th:each="estado : ${listaestados}"
+							th:value="${estado.idEstado}" th:text="${estado.nombre}"></option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="idEstadoNuevo">Estado Nuevo</label>
+					<select th:field="*{estadoNuevo.idEstado}" class="form-control"
+						id="idEstadoNuevo">
+						<option value="">Seleccione un estado</option>
+						<option th:each="estado : ${listaestados}"
+							th:value="${estado.idEstado}" th:text="${estado.nombre}"></option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="idUsuarioResponsable">Usuario Responsable</label>
+					<select th:field="*{idUsuarioResponsable}" class="form-control"
+						id="idUsuarioResponsable">
+						<option value="">Seleccione un usuario</option>
+						<option th:each="usuario : ${listausuarios}"
+							th:value="${usuario.idUsuario}"
+							th:text="${usuario.nombres} + ' ' + ${usuario.apellidos}"></option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="observaciones">Observaciones</label> <input type="text"
+						th:field="*{observaciones}" class="form-control"
+						id="observaciones">
+				</div>
+				<button type="submit" class="main-btn primary-btn btn-hover">
+					<i class="lni lni-save me-1"></i> Guardar
+				</button>
+			</form>
+		</div>
+
 	</div>
 </body>
 </html>

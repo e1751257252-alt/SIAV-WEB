@@ -25,8 +25,19 @@ public class MovimientoSaldoServiceImpl implements IMovimientoSaldoService {
 	}
 
 	@Override
+	public MovimientoSaldoResponseDto buscarPorId(Long idMovimiento) {
+		return webclient.get().uri("/movimiento-saldo/{id}", idMovimiento).retrieve()
+				.bodyToMono(MovimientoSaldoResponseDto.class).block();
+	}
+
+	@Override
 	public void guardarMovimientoSaldo(MovimientoSaldoRequestDto nuevoMovimiento) {
 		webclient.post().uri("/movimiento-saldo").bodyValue(nuevoMovimiento).retrieve().toBodilessEntity().block();
+	}
+
+	@Override
+	public void desactivarMovimientoSaldo(Long idMovimiento) {
+		webclient.delete().uri("/movimiento-saldo/{id}", idMovimiento).retrieve().toBodilessEntity().block();
 	}
 
 }

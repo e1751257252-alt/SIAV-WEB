@@ -9,5 +9,11 @@ public interface IUsuarioService {
 
 	List<UsuarioResponseDto> listarUsuarios();
 
+	UsuarioResponseDto buscarPorId(Long idUsuario);
+
 	void guardarUsuario(UsuarioRequestDto nuevoUsuario);
+
+	void desactivarUsuario(Long idUsuario);
+
+	UsuarioResponseDto autenticar(String email, String password);
 }

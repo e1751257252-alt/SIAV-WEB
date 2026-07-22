@@ -9,5 +9,9 @@ public interface ISolicitudService {
 
 	List<SolicitudResponseDto> listarSolicitudes();
 
+	SolicitudResponseDto buscarPorId(Long idSolicitud);
+
 	void guardarSolicitud(SolicitudRequestDto nuevaSolicitud);
+
+	void desactivarSolicitud(Long idSolicitud);
 }

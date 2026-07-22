@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -29,6 +29,7 @@
               </div>
               <h3 class="text-center mb-5">Iniciar Sesión</h3>
               <p class="text-center mb-30">Ingrese sus credenciales para acceder al sistema.</p>
+              <p th:if="${error}" th:text="${error}" class="text-center mb-20" style="color: #d9534f;"></p>
               <form action="/login" method="post">
                 <div class="input-style-1 mb-20">
                   <label>Usuario</label>

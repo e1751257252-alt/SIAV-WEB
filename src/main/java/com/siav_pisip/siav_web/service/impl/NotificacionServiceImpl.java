@@ -29,4 +29,15 @@ public class NotificacionServiceImpl implements INotificacionService {
 		webclient.post().uri("/notificacion").bodyValue(nuevaNotificacion).retrieve().toBodilessEntity().block();
 	}
 
+	@Override
+	public NotificacionResponseDto buscarPorId(Long idNotificacion) {
+		return webclient.get().uri("/notificacion/{id}", idNotificacion).retrieve()
+				.bodyToMono(NotificacionResponseDto.class).block();
+	}
+
+	@Override
+	public void desactivarNotificacion(Long idNotificacion) {
+		webclient.delete().uri("/notificacion/{id}", idNotificacion).retrieve().toBodilessEntity().block();
+	}
+
 }

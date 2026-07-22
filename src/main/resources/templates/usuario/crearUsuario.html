@@ -50,15 +50,24 @@
 				</div>
 				<div class="mb-3">
 					<label for="passwordHash">Contraseña</label> <input type="password"
-						th:field="*{passwordHash}" class="form-control" id="passwordHash">
+						th:field="*{passwordHash}" class="form-control" id="passwordHash"
+						required>
 				</div>
 				<div class="mb-3">
-					<label for="idRol">ID Rol</label> <input type="number"
-						th:field="*{idRol}" class="form-control" id="idRol">
+					<label for="idRol">Rol</label>
+					<select th:field="*{idRol}" class="form-control" id="idRol">
+						<option value="">Seleccione un rol</option>
+						<option th:each="rol : ${listaroles}" th:value="${rol.idRol}"
+							th:text="${rol.nombreRol}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
-					<label for="idJefe">ID Jefe</label> <input type="number"
-						th:field="*{idJefe}" class="form-control" id="idJefe">
+					<label for="idJefe">Jefe</label>
+					<select th:field="*{idJefe}" class="form-control" id="idJefe">
+						<option value="">Sin jefe</option>
+						<option th:each="jefe : ${listajefes}" th:value="${jefe.idUsuario}"
+							th:text="${jefe.nombres} + ' ' + ${jefe.apellidos}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
 					<label for="cargo">Cargo</label> <input type="text"

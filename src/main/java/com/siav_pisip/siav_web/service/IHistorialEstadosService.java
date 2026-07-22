@@ -10,4 +10,8 @@ public interface IHistorialEstadosService {
 	List<HistorialEstadosResponseDto> listarHistorialEstados();
 
 	void guardarHistorialEstados(HistorialEstadosRequestDto nuevoHistorial);
+
+	HistorialEstadosResponseDto buscarPorId(Long idHistorial);
+
+	void desactivarHistorialEstados(Long idHistorial);
 }

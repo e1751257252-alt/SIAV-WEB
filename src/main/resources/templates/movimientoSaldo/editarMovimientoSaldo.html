@@ -3,11 +3,73 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="/plantilla/plantillaui">
 <head>
-<title>Roles</title>
+<title>Editar Movimiento Saldo</title>
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
-		<h2>Editar Movimiento de Saldos</h2>
+
+		<div class="title-wrapper pt-30">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<div class="title">
+						<h2>Editar Movimiento Saldo</h2>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="breadcrumb-wrapper">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item"><a
+									th:href="@{/movimientoSaldo}">Movimiento Saldo</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Editar</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-style mb-30">
+			<form th:action="@{/movimientoSaldo/guardar}"
+				th:object="${movimiento}" method="post">
+				<input type="hidden" th:field="*{idMovimiento}">
+				<div class="mb-3">
+					<label for="idSaldo">Saldo</label>
+					<select th:field="*{idSaldo}" class="form-control" id="idSaldo">
+						<option value="">Seleccione un saldo</option>
+						<option th:each="saldo : ${listasaldos}" th:value="${saldo.idSaldo}"
+							th:text="${saldo.nombresUsuario} + ' ' + ${saldo.apellidosUsuario} + ' - ' + ${saldo.anio}"></option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="idSolicitud">Solicitud</label>
+					<select th:field="*{idSolicitud}" class="form-control" id="idSolicitud">
+						<option value="">Sin solicitud asociada</option>
+						<option th:each="solicitud : ${listasolicitudes}"
+							th:value="${solicitud.idSolicitud}"
+							th:text="'#' + ${solicitud.idSolicitud} + ' - ' + ${solicitud.nombresUsuario} + ' ' + ${solicitud.apellidosUsuario}"></option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="tipoMovimiento">Tipo de Movimiento</label> <input
+						type="text" th:field="*{tipoMovimiento}" class="form-control"
+						id="tipoMovimiento">
+				</div>
+				<div class="mb-3">
+					<label for="dias">Días</label> <input type="number"
+						th:field="*{dias}" class="form-control" id="dias">
+				</div>
+				<div class="mb-3">
+					<label for="descripcion">Descripción</label> <input type="text"
+						th:field="*{descripcion}" class="form-control" id="descripcion">
+				</div>
+				<button type="submit" class="main-btn primary-btn btn-hover">
+					<i class="lni lni-save me-1"></i> Guardar
+				</button>
+			</form>
+		</div>
+
 	</div>
 </body>
 </html>

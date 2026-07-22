@@ -15,4 +15,5 @@ public class HistorialEstadosResponseDto {
 	private String nombresUsuarioResponsable;
 	private LocalDateTime fechaCambio;
 	private String observaciones;
+	private Boolean activo;
 }

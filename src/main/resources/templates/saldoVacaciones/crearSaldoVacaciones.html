@@ -34,8 +34,13 @@
 			<form th:action="@{/saldoVacaciones/guardar}" th:object="${saldo}"
 				method="post">
 				<div class="mb-3">
-					<label for="idUsuario">ID Usuario</label> <input type="number"
-						th:field="*{idUsuario}" class="form-control" id="idUsuario">
+					<label for="idUsuario">Usuario</label>
+					<select th:field="*{idUsuario}" class="form-control" id="idUsuario">
+						<option value="">Seleccione un usuario</option>
+						<option th:each="usuario : ${listausuarios}"
+							th:value="${usuario.idUsuario}"
+							th:text="${usuario.nombres} + ' ' + ${usuario.apellidos}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
 					<label for="anio">Año</label> <input type="number"

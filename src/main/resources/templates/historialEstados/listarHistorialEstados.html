@@ -66,9 +66,15 @@
 										<td th:text="${indice.nombresUsuarioResponsable}"></td>
 										<td th:text="${indice.fechaCambio}"></td>
 										<td th:text="${indice.observaciones}"></td>
-										<td><a href="" class="btn btn-light"><i
-												class="lni lni-pencil"></i></a> <a href="" class="btn btn-light"><i
-												class="lni lni-trash-can"></i></a></td>
+										<td>
+											<a th:href="@{/historialEstados/editarHistorialEstados/{id}(id=${indice.idHistorial})}"
+												class="btn btn-light"><i class="lni lni-pencil"></i></a>
+											<form th:action="@{/historialEstados/desactivar/{id}(id=${indice.idHistorial})}"
+												method="post" style="display: inline;">
+												<button type="submit" class="btn btn-light"><i
+													class="lni lni-trash-can"></i></button>
+											</form>
+										</td>
 									</tr>
 								</tbody>
 							</table>

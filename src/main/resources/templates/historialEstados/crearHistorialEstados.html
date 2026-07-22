@@ -34,23 +34,41 @@
 			<form th:action="@{/historialEstados/guardar}"
 				th:object="${historial}" method="post">
 				<div class="mb-3">
-					<label for="idSolicitud">ID Solicitud</label> <input type="number"
-						th:field="*{idSolicitud}" class="form-control" id="idSolicitud">
+					<label for="idSolicitud">Solicitud</label>
+					<select th:field="*{idSolicitud}" class="form-control" id="idSolicitud">
+						<option value="">Seleccione una solicitud</option>
+						<option th:each="solicitud : ${listasolicitudes}"
+							th:value="${solicitud.idSolicitud}"
+							th:text="'#' + ${solicitud.idSolicitud} + ' - ' + ${solicitud.nombresUsuario} + ' ' + ${solicitud.apellidosUsuario}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
-					<label for="idEstadoAnterior">ID Estado Anterior</label> <input
-						type="number" th:field="*{estadoAnterior.idEstado}"
-						class="form-control" id="idEstadoAnterior">
+					<label for="idEstadoAnterior">Estado Anterior</label>
+					<select th:field="*{estadoAnterior.idEstado}" class="form-control"
+						id="idEstadoAnterior">
+						<option value="">Sin estado anterior</option>
+						<option th:each="estado : ${listaestados}"
+							th:value="${estado.idEstado}" th:text="${estado.nombre}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
-					<label for="idEstadoNuevo">ID Estado Nuevo</label> <input
-						type="number" th:field="*{estadoNuevo.idEstado}"
-						class="form-control" id="idEstadoNuevo">
+					<label for="idEstadoNuevo">Estado Nuevo</label>
+					<select th:field="*{estadoNuevo.idEstado}" class="form-control"
+						id="idEstadoNuevo">
+						<option value="">Seleccione un estado</option>
+						<option th:each="estado : ${listaestados}"
+							th:value="${estado.idEstado}" th:text="${estado.nombre}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
-					<label for="idUsuarioResponsable">ID Usuario Responsable</label> <input
-						type="number" th:field="*{idUsuarioResponsable}"
-						class="form-control" id="idUsuarioResponsable">
+					<label for="idUsuarioResponsable">Usuario Responsable</label>
+					<select th:field="*{idUsuarioResponsable}" class="form-control"
+						id="idUsuarioResponsable">
+						<option value="">Seleccione un usuario</option>
+						<option th:each="usuario : ${listausuarios}"
+							th:value="${usuario.idUsuario}"
+							th:text="${usuario.nombres} + ' ' + ${usuario.apellidos}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
 					<label for="observaciones">Observaciones</label> <input type="text"

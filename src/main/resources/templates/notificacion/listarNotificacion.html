@@ -61,9 +61,15 @@
 										<td th:text="${indice.tipoNotificacion}"></td>
 										<td th:text="${indice.mensaje}"></td>
 										<td th:text="${indice.leido}"></td>
-										<td><a href="" class="btn btn-light"><i
-												class="lni lni-pencil"></i></a> <a href="" class="btn btn-light"><i
-												class="lni lni-trash-can"></i></a></td>
+										<td>
+											<a th:href="@{/notificacion/editarNotificacion/{id}(id=${indice.idNotificacion})}"
+												class="btn btn-light"><i class="lni lni-pencil"></i></a>
+											<form th:action="@{/notificacion/desactivar/{id}(id=${indice.idNotificacion})}"
+												method="post" style="display: inline;">
+												<button type="submit" class="btn btn-light"><i
+													class="lni lni-trash-can"></i></button>
+											</form>
+										</td>
 									</tr>
 								</tbody>
 							</table>

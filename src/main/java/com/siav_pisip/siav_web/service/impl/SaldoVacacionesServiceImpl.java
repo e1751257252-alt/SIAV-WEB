@@ -25,8 +25,19 @@ public class SaldoVacacionesServiceImpl implements ISaldoVacacionesService {
 	}
 
 	@Override
+	public SaldoVacacionesResponseDto buscarPorId(Long idSaldo) {
+		return webclient.get().uri("/saldo-vacaciones/{id}", idSaldo).retrieve()
+				.bodyToMono(SaldoVacacionesResponseDto.class).block();
+	}
+
+	@Override
 	public void guardarSaldoVacaciones(SaldoVacacionesRequestDto nuevoSaldo) {
 		webclient.post().uri("/saldo-vacaciones").bodyValue(nuevoSaldo).retrieve().toBodilessEntity().block();
+	}
+
+	@Override
+	public void desactivarSaldoVacaciones(Long idSaldo) {
+		webclient.delete().uri("/saldo-vacaciones/{id}", idSaldo).retrieve().toBodilessEntity().block();
 	}
 
 }

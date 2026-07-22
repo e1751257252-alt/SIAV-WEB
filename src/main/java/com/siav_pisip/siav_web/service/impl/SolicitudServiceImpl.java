@@ -25,8 +25,19 @@ public class SolicitudServiceImpl implements ISolicitudService {
 	}
 
 	@Override
+	public SolicitudResponseDto buscarPorId(Long idSolicitud) {
+		return webclient.get().uri("/solicitud/{id}", idSolicitud).retrieve().bodyToMono(SolicitudResponseDto.class)
+				.block();
+	}
+
+	@Override
 	public void guardarSolicitud(SolicitudRequestDto nuevaSolicitud) {
 		webclient.post().uri("/solicitud").bodyValue(nuevaSolicitud).retrieve().toBodilessEntity().block();
+	}
+
+	@Override
+	public void desactivarSolicitud(Long idSolicitud) {
+		webclient.delete().uri("/solicitud/{id}", idSolicitud).retrieve().toBodilessEntity().block();
 	}
 
 }

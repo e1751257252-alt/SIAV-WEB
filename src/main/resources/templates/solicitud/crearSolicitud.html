@@ -30,12 +30,12 @@
 		</div>
 
 		<div class="card-style mb-30">
+			<p>
+				Jefe que aprobará esta solicitud: <strong
+					th:text="${nombreJefe} ?: 'no tienes un jefe asignado, consulta con el administrador'"></strong>
+			</p>
 			<form th:action="@{/solicitud/guardar}" th:object="${solicitud}"
 				method="post">
-				<div class="mb-3">
-					<label for="idUsuario">ID Usuario</label> <input type="number"
-						th:field="*{idUsuario}" class="form-control" id="idUsuario">
-				</div>
 				<div class="mb-3">
 					<label for="fechaInicio">Fecha Inicio</label> <input type="date"
 						th:field="*{fechaInicio}" class="form-control" id="fechaInicio">
@@ -47,30 +47,32 @@
 				<div class="mb-3">
 					<label for="diasSolicitados">Días Solicitados</label> <input
 						type="number" th:field="*{diasSolicitados}" class="form-control"
-						id="diasSolicitados">
+						id="diasSolicitados" readonly>
 				</div>
 				<div class="mb-3">
 					<label for="motivo">Motivo</label> <input type="text"
 						th:field="*{motivo}" class="form-control" id="motivo">
-				</div>
-				<div class="mb-3">
-					<label for="idEstado">ID Estado</label> <input type="number"
-						th:field="*{idEstado}" class="form-control" id="idEstado">
-				</div>
-				<div class="mb-3">
-					<label for="idAprobador">ID Aprobador</label> <input type="number"
-						th:field="*{idAprobador}" class="form-control" id="idAprobador">
-				</div>
-				<div class="mb-3">
-					<label for="observacionesAprobador">Observaciones</label> <input
-						type="text" th:field="*{observacionesAprobador}"
-						class="form-control" id="observacionesAprobador">
 				</div>
 				<button type="submit" class="main-btn primary-btn btn-hover">
 					<i class="lni lni-save me-1"></i> Guardar
 				</button>
 			</form>
 		</div>
+
+		<script>
+			function calcularDias() {
+				var inicio = document.getElementById('fechaInicio').value;
+				var fin = document.getElementById('fechaFin').value;
+				if (!inicio || !fin) {
+					return;
+				}
+				var msPorDia = 24 * 60 * 60 * 1000;
+				var dias = Math.round((new Date(fin) - new Date(inicio)) / msPorDia) + 1;
+				document.getElementById('diasSolicitados').value = dias > 0 ? dias : 0;
+			}
+			document.getElementById('fechaInicio').addEventListener('change', calcularDias);
+			document.getElementById('fechaFin').addEventListener('change', calcularDias);
+		</script>
 
 	</div>
 </body>

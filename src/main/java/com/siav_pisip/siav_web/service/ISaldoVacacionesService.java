@@ -9,5 +9,9 @@ public interface ISaldoVacacionesService {
 
 	List<SaldoVacacionesResponseDto> listarSaldosVacaciones();
 
+	SaldoVacacionesResponseDto buscarPorId(Long idSaldo);
+
 	void guardarSaldoVacaciones(SaldoVacacionesRequestDto nuevoSaldo);
+
+	void desactivarSaldoVacaciones(Long idSaldo);
 }

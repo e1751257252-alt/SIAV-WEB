@@ -16,4 +16,5 @@ public class NotificacionResponseDto {
 	private Boolean leido;
 	private LocalDateTime fechaLectura;
 	private LocalDateTime fechaCreacion;
+	private Boolean activo;
 }
