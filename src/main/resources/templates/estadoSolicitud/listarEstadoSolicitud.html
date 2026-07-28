@@ -19,7 +19,7 @@
 					<div class="breadcrumb-wrapper">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/index}">Página Principal</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Estado
 									Solicitud</li>
 							</ol>
@@ -29,6 +29,9 @@
 			</div>
 		</div>
 
+		<div th:if="${errorMensaje}" class="alert alert-danger" role="alert"
+			th:text="${errorMensaje}"></div>
+
 		<div class="tables-wrapper">
 			<div class="row">
 				<div class="col-12">
@@ -36,6 +39,10 @@
 						<div
 							class="d-flex align-items-center justify-content-between mb-20">
 							<h6 class="mb-0">Lista Estados de Solicitud</h6>
+							<a th:href="@{/estadoSolicitud/crearEstadoSolicitud}"
+								class="main-btn primary-btn btn-hover btn-sm"> <i
+								class="lni lni-plus me-1"></i> Crear Estado
+							</a>
 						</div>
 						<div class="table-wrapper table-responsive">
 							<table class="table">
@@ -43,12 +50,22 @@
 									<tr>
 										<th>#</th>
 										<th>Nombre</th>
+										<th>Acciones</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each="indice: ${listaestados}">
 										<td th:text="${indice.idEstado}"></td>
 										<td th:text="${indice.nombre}"></td>
+										<td>
+											<a th:href="@{/estadoSolicitud/editarEstadoSolicitud/{id}(id=${indice.idEstado})}"
+												class="btn btn-light"><i class="lni lni-pencil"></i></a>
+											<form th:action="@{/estadoSolicitud/desactivar/{id}(id=${indice.idEstado})}"
+												method="post" style="display: inline;">
+												<button type="submit" class="btn btn-light"><i
+													class="lni lni-trash-can"></i></button>
+											</form>
+										</td>
 									</tr>
 								</tbody>
 							</table>

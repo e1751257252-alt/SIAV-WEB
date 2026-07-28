@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="/assets/images/favicon.png" type="image/png" />
+<title>Error 404 | SIAV</title>
+<style>
+body {
+	min-height: 100vh;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f5f7fb;
+	font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.error-card {
+	width: 100%;
+	max-width: 460px;
+	background: #ffffff;
+	border-radius: 24px;
+	padding: 48px 40px;
+	text-align: center;
+	box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(226, 232, 240, 0.6);
+}
+
+.error-code {
+	font-size: 4rem;
+	font-weight: 700;
+	color: #365CF5;
+	margin: 0;
+	line-height: 1;
+}
+
+.error-title {
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: #1a1a1a;
+	margin: 16px 0 8px;
+}
+
+.error-text {
+	color: #6b7280;
+	margin: 0 0 28px;
+	line-height: 1.5;
+}
+
+.error-btn {
+	display: inline-block;
+	background: #365CF5;
+	color: #ffffff;
+	text-decoration: none;
+	padding: 12px 28px;
+	border-radius: 10px;
+	font-weight: 600;
+	transition: background-color .15s ease;
+}
+
+.error-btn:hover {
+	background: #2947d1;
+}
+</style>
+</head>
+<body>
+	<div class="error-card">
+		<p class="error-code">404</p>
+		<p class="error-title">Página no encontrada</p>
+		<p class="error-text">La página que buscas no existe o fue
+			movida.</p>
+		<a class="error-btn" href="/index">Volver a la página principal</a>
+	</div>
+</body>
+</html>

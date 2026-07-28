@@ -19,7 +19,7 @@
 					<div class="breadcrumb-wrapper">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/index}">Página Principal</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Mi
 									equipo</li>
 							</ol>
@@ -32,6 +32,8 @@
 		<div class="tables-wrapper">
 			<div class="row">
 				<div class="col-12">
+					<div th:if="${errorMensaje}" class="alert alert-danger" role="alert"
+						th:text="${errorMensaje}"></div>
 					<div class="card-style mb-30">
 						<div
 							class="d-flex align-items-center justify-content-between mb-20">
@@ -63,12 +65,17 @@
 											<form th:action="@{/solicitud/aprobar/{id}(id=${indice.idSolicitud})}"
 												method="post" style="display: inline;">
 												<button type="submit" class="btn btn-light text-success"><i
-													class="lni lni-checkmark-circle"></i> Aprobar</button>
+													class="lni lni-checkmark-circle me-1"></i> Aprobar</button>
 											</form>
 											<form th:action="@{/solicitud/rechazar/{id}(id=${indice.idSolicitud})}"
-												method="post" style="display: inline;">
-												<button type="submit" class="btn btn-light text-danger"><i
-													class="lni lni-close"></i> Rechazar</button>
+												method="post" class="d-inline-flex gap-1 align-items-center">
+												<input type="text" name="observaciones"
+													class="form-control form-control-sm motivo-rechazo"
+													style="width: 150px; display: none;"
+													placeholder="Motivo del rechazo" maxlength="50" required>
+												<button type="submit" class="btn btn-light text-danger"
+													onclick="return mostrarMotivoRechazo(event, this)"><i
+													class="lni lni-close me-1"></i> Rechazar</button>
 											</form>
 										</td>
 									</tr>
@@ -80,9 +87,85 @@
 							</table>
 						</div>
 					</div>
+
+					<div class="card-style mb-30">
+						<div
+							class="d-flex align-items-center justify-content-between mb-20">
+							<h6 class="mb-0">Aprobadas de mi equipo</h6>
+						</div>
+						<div class="table-wrapper table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Usuario</th>
+										<th>Fecha Inicio</th>
+										<th>Fecha Fin</th>
+										<th>Días</th>
+										<th>Motivo</th>
+										<th>Acciones</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="indice: ${listaaprobadas}">
+										<td th:text="${indice.idSolicitud}"></td>
+										<td
+											th:text="${indice.nombresUsuario} + ' ' + ${indice.apellidosUsuario}"></td>
+										<td th:text="${indice.fechaInicio}"></td>
+										<td th:text="${indice.fechaFin}"></td>
+										<td th:text="${indice.diasSolicitados}"></td>
+										<td th:text="${indice.motivo}"></td>
+										<td>
+											<form th:action="@{/solicitud/cancelarAprobacion/{id}(id=${indice.idSolicitud})}"
+												method="post" class="d-inline-flex gap-1 align-items-center">
+												<input type="hidden" name="origen" value="equipo">
+												<input type="text" name="observaciones"
+													class="form-control form-control-sm motivo-cancelacion"
+													style="width: 150px; display: none;"
+													placeholder="Motivo de la cancelación" maxlength="50" required>
+												<button type="submit" class="btn btn-light text-danger"
+													onclick="return revelarMotivoCancelacion(event, this)"><i
+													class="lni lni-close me-1"></i> Cancelar aprobación</button>
+											</form>
+										</td>
+									</tr>
+									<tr th:if="${#lists.isEmpty(listaaprobadas)}">
+										<td colspan="7">No tienes solicitudes aprobadas en tu
+											equipo.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+
+		<script>
+			function mostrarMotivoRechazo(event, boton) {
+				var form = boton.closest('form');
+				var input = form.querySelector('.motivo-rechazo');
+				if (input.style.display === 'none') {
+					event.preventDefault();
+					input.style.display = 'inline-block';
+					input.focus();
+					return false;
+				}
+				return true;
+			}
+
+			function revelarMotivoCancelacion(event, boton) {
+				var form = boton.closest('form');
+				var input = form.querySelector('.motivo-cancelacion');
+				if (input.style.display === 'none') {
+					event.preventDefault();
+					input.style.display = 'inline-block';
+					input.focus();
+					return false;
+				}
+				return true;
+			}
+		</script>
 
 	</div>
 </body>

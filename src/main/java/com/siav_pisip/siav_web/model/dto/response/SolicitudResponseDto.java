@@ -24,4 +24,7 @@ public class SolicitudResponseDto {
 	private LocalDateTime fechaResolucion;
 	private String observacionesAprobador;
 	private Boolean activo;
+	private Integer numeroSolicitud;
+	private Long idCanceladoPor;
+	private String nombresCanceladoPor;
 }

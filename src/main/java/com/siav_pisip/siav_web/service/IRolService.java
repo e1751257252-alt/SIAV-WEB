@@ -9,6 +9,10 @@ public interface IRolService {
 
 	List<RolResponseDto> listarRoles();
 
+	RolResponseDto buscarPorId(Long idRol);
+
 	void guardarRol(RolRequestDto nuevoRol);
+
+	void desactivarRol(Long idRol);
 
 }

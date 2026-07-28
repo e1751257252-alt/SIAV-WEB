@@ -13,6 +13,120 @@
 <link rel="stylesheet"
 	th:href="@{/assets/css/materialdesignicons.min.css}" />
 <link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+<style>
+.table th,
+.table td {
+	font-size: 0.85rem;
+	padding: 0.5rem 0.6rem;
+}
+
+.table .btn-light {
+	transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.table .btn-light:has(i.lni-pencil):hover {
+	background-color: #365CF5;
+	border-color: #365CF5;
+	color: #ffffff;
+}
+
+.table .btn-light:has(i.lni-trash-can):hover {
+	background-color: #D50100;
+	border-color: #D50100;
+	color: #ffffff;
+}
+
+.table .btn-light:has(i.lni-checkmark-circle):hover {
+	background-color: #E1F7E8;
+	border-color: #E1F7E8;
+	color: #1F9254;
+}
+
+.table .btn-light:has(i.lni-close):hover {
+	background-color: #FCE8E8;
+	border-color: #FCE8E8;
+	color: #D50100;
+}
+
+.btn-ver-motivo:hover {
+	background-color: #365CF5;
+	border-color: #365CF5;
+	color: #ffffff;
+}
+
+.card-style h6 {
+	font-size: 0.9rem;
+}
+
+.card-style .btn:not(:has(i.lni-plus)) {
+	font-size: 0.8rem;
+}
+
+.card-style .form-check-label {
+	font-size: 0.8rem;
+}
+
+.btn-cancel {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid #D50100;
+	border-radius: 8px;
+	padding: 10px 20px;
+	color: #D50100;
+	background-color: transparent;
+	font-weight: 600;
+	transition: background-color .15s ease, color .15s ease;
+}
+
+.btn-cancel:hover {
+	background-color: #D50100;
+	color: #ffffff;
+}
+
+.card-style form label,
+.card-style form .form-control,
+.card-style form .form-check-label {
+	font-size: 0.85rem;
+}
+
+.badge-estado {
+	display: inline-block;
+	padding: 4px 14px;
+	border-radius: 999px;
+	font-size: 0.72rem;
+	font-weight: 600;
+}
+
+.badge-activo {
+	background-color: #E1F7E8;
+	color: #1F9254;
+}
+
+.badge-inactivo {
+	background-color: #FCE8E8;
+	color: #D50100;
+}
+
+.badge-aprobada {
+	background-color: #E1F7E8;
+	color: #1F9254;
+}
+
+.badge-rechazada {
+	background-color: #FCE8E8;
+	color: #D50100;
+}
+
+.badge-pendiente {
+	background-color: #E4EAFD;
+	color: #365CF5;
+}
+
+.badge-cancelada {
+	background-color: #EDEDED;
+	color: #6C757D;
+}
+</style>
 </head>
 <body>
 	<div id="preloader">
@@ -26,43 +140,49 @@
 				style="max-height: 55px; width: auto;" />
 			</a>
 		</div>
-		<nav class="sidebar-nav">
+		<nav class="sidebar-nav"
+			th:with="rol=${session.usuarioLogueado != null ? session.usuarioLogueado.nombreRol : ''}">
 			<ul>
 				<li class="nav-item"><a th:href="@{/index}"> <span
 						class="icon"><i class="lni lni-home"></i></span> <span
 						class="text">Página Principal</span>
 				</a></li>
-				<li class="nav-item"><a th:href="@{/rol}"> <span
-						class="icon"><i class="lni lni-shield"></i></span> <span
-						class="text">Roles</span>
+				<li class="nav-item" th:if="${#strings.equalsIgnoreCase(rol,'Administrador')}">
+					<a th:href="@{/rol}"> <span class="icon"><i
+							class="lni lni-shield"></i></span> <span class="text">Roles</span>
 				</a></li>
-				<li class="nav-item"><a th:href="@{/usuario}"> <span
-						class="icon"><i class="lni lni-users"></i></span> <span
-						class="text">Usuarios</span>
+				<li class="nav-item" th:if="${#strings.equalsIgnoreCase(rol,'Administrador')}">
+					<a th:href="@{/usuario}"> <span class="icon"><i
+							class="lni lni-users"></i></span> <span class="text">Usuarios</span>
 				</a></li>
-				<li class="nav-item"><a th:href="@{/estadoSolicitud}"> <span
-						class="icon"><i class="lni lni-tag"></i></span> <span class="text">Estado
+				<li class="nav-item" th:if="${#strings.equalsIgnoreCase(rol,'Administrador')}">
+					<a th:href="@{/estadoSolicitud}"> <span class="icon"><i
+							class="lni lni-tag"></i></span> <span class="text">Estado
 							Solicitud</span>
 				</a></li>
 				<li class="nav-item"><a th:href="@{/solicitud}"> <span
 						class="icon"><i class="lni lni-files"></i></span> <span
 						class="text">Solicitudes</span>
 				</a></li>
-				<li class="nav-item"><a th:href="@{/solicitud/miEquipo}"> <span
-						class="icon"><i class="lni lni-checkmark-circle"></i></span> <span
+				<li class="nav-item" th:if="${#strings.equalsIgnoreCase(rol,'Jefe') or #strings.equalsIgnoreCase(rol,'Administrador')}">
+					<a th:href="@{/solicitud/miEquipo}"> <span class="icon"><i
+							class="lni lni-checkmark-circle"></i></span> <span
 						class="text">Mi Equipo</span>
 				</a></li>
-				<li class="nav-item"><a th:href="@{/saldoVacaciones}"> <span
-						class="icon"><i class="lni lni-calendar"></i></span> <span
-						class="text">Saldo Vacaciones</span>
+				<li class="nav-item" th:if="${#strings.equalsIgnoreCase(rol,'Administrador')}">
+					<a th:href="@{/saldoVacaciones}"> <span class="icon"><i
+							class="lni lni-calendar"></i></span> <span class="text">Saldo
+							Vacaciones</span>
 				</a></li>
-				<li class="nav-item"><a th:href="@{/movimientoSaldo}"> <span
-						class="icon"><i class="lni lni-shuffle"></i></span> <span
-						class="text">Movimiento Saldo</span>
+				<li class="nav-item" th:if="${#strings.equalsIgnoreCase(rol,'Administrador')}">
+					<a th:href="@{/movimientoSaldo}"> <span class="icon"><i
+							class="lni lni-shuffle"></i></span> <span class="text">Movimiento
+							Saldo</span>
 				</a></li>
-				<li class="nav-item"><a th:href="@{/historialEstados}"> <span
-						class="icon"><i class="lni lni-timer"></i></span> <span
-						class="text">Historial Estados</span>
+				<li class="nav-item" th:if="${#strings.equalsIgnoreCase(rol,'Administrador')}">
+					<a th:href="@{/historialEstados}"> <span class="icon"><i
+							class="lni lni-timer"></i></span> <span class="text">Historial
+							Estados</span>
 				</a></li>
 				<li class="nav-item"><a th:href="@{/notificacion}"> <span
 						class="icon"><i class="lni lni-alarm"></i></span> <span
@@ -99,8 +219,10 @@
 													alt="" />
 											</div>
 											<div>
-												<h6 class="fw-500">Administrador</h6>
-												<p>Admin</p>
+												<h6 class="fw-500"
+													th:text="${#strings.capitalize(#strings.toLowerCase(session.usuarioLogueado.nombres))}">Administrador</h6>
+												<p
+													th:text="${#strings.capitalize(#strings.toLowerCase(session.usuarioLogueado.nombreRol))}">Admin</p>
 											</div>
 										</div>
 									</div>
@@ -120,9 +242,7 @@
 		<section class="section">
 			<div class="container-fluid">
 
-				<!-- ============ CONTENIDO VARIABLE (rellenado por cada vista) ============ -->
 				<div layout:fragment="cargarpaginas"></div>
-				<!-- ============ FIN CONTENIDO VARIABLE ============ -->
 
 			</div>
 		</section>
@@ -142,5 +262,6 @@
 	</main>
 	<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
 	<script th:src="@{/assets/js/main.js}"></script>
+	<script th:src="@{/assets/js/limite-caracteres.js}"></script>
 </body>
 </html>

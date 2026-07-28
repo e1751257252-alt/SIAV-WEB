@@ -7,7 +7,87 @@
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
-		<h2>Página Principal </h2>
+
+		<div class="title-wrapper pt-30">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<div class="title">
+						<h2>Página Principal</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div th:if="${param.accesoDenegado}" class="alert alert-danger" role="alert">
+			No tienes permiso para acceder a esa sección con tu rol actual.
+		</div>
+
+		<div class="row">
+			<div class="col-xl-3 col-md-6 mb-30">
+				<div class="card-style">
+					<h6 class="mb-10">Pendientes</h6>
+					<h3 class="mb-0" th:text="${pendientes}">0</h3>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6 mb-30">
+				<div class="card-style">
+					<h6 class="mb-10">Aprobadas</h6>
+					<h3 class="mb-0" th:text="${aprobadas}">0</h3>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6 mb-30">
+				<div class="card-style">
+					<h6 class="mb-10">Rechazadas</h6>
+					<h3 class="mb-0" th:text="${rechazadas}">0</h3>
+				</div>
+			</div>
+			<div class="col-xl-3 col-md-6 mb-30" th:if="${!esAdministrador}">
+				<div class="card-style">
+					<h6 class="mb-10">Saldo Disponible</h6>
+					<h3 class="mb-0" th:text="${saldoDisponible}">0</h3>
+				</div>
+			</div>
+		</div>
+
+		<div class="tables-wrapper">
+			<div class="row">
+				<div class="col-12">
+					<div class="card-style mb-30">
+						<div class="d-flex align-items-center justify-content-between mb-20">
+							<h6 class="mb-0">Últimas Solicitudes</h6>
+						</div>
+						<div class="table-wrapper table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Colaborador</th>
+										<th>Fecha Inicio</th>
+										<th>Fecha Fin</th>
+										<th>Días</th>
+										<th>Estado</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="indice: ${ultimasSolicitudes}">
+										<td th:text="${indice.nombresUsuario} + ' ' + ${indice.apellidosUsuario}"></td>
+										<td th:text="${indice.fechaInicio}"></td>
+										<td th:text="${indice.fechaFin}"></td>
+										<td th:text="${indice.diasSolicitados}"></td>
+										<td><span class="badge-estado"
+												th:classappend="${#strings.equalsIgnoreCase(indice.nombreEstado, 'Aprobada')} ? 'badge-aprobada' : (${#strings.equalsIgnoreCase(indice.nombreEstado, 'Rechazada')} ? 'badge-rechazada' : (${#strings.equalsIgnoreCase(indice.nombreEstado, 'Cancelada')} ? 'badge-cancelada' : 'badge-pendiente'))"
+												th:text="${indice.nombreEstado}"></span></td>
+									</tr>
+									<tr th:if="${#lists.isEmpty(ultimasSolicitudes)}">
+										<td colspan="5" class="text-center">No hay solicitudes registradas.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 </body>
 </html>

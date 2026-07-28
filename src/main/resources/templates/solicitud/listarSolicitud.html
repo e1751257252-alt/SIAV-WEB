@@ -19,7 +19,7 @@
 					<div class="breadcrumb-wrapper">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/index}">Página Principal</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Solicitudes</li>
 							</ol>
 						</nav>
@@ -28,17 +28,61 @@
 			</div>
 		</div>
 
+		<div th:if="${errorMensaje}" class="alert alert-danger" role="alert"
+			th:text="${errorMensaje}"></div>
+
 		<div class="tables-wrapper">
 			<div class="row">
 				<div class="col-12">
 					<div class="card-style mb-30">
+						<h6 class="mb-20">Exportar Reporte (Aprobadas / Rechazadas)</h6>
+						<form th:action="@{/solicitud/exportar/excel}" method="get"
+							id="formReporte" class="row g-3 align-items-end">
+							<div class="col-md-3">
+								<label for="fechaDesde">Fecha Desde</label> <input type="date"
+									class="form-control" id="fechaDesde" name="fechaDesde">
+							</div>
+							<div class="col-md-3">
+								<label for="fechaHasta">Fecha Hasta</label> <input type="date"
+									class="form-control" id="fechaHasta" name="fechaHasta">
+							</div>
+							<div class="col-md-3" th:if="${mostrarFiltroColaborador}">
+								<label for="idUsuario">Colaborador</label>
+								<select class="form-control" id="idUsuario" name="idUsuario">
+									<option value="">Todos</option>
+									<option th:each="u : ${listausuarios}" th:value="${u.idUsuario}"
+										th:text="${u.nombres} + ' ' + ${u.apellidos}"></option>
+								</select>
+							</div>
+							<div class="col-md-3 d-flex gap-2">
+								<button type="submit" th:formaction="@{/solicitud/exportar/excel}"
+									class="main-btn primary-btn btn-hover btn-sm">
+									<i class="lni lni-download me-1"></i> Excel
+								</button>
+								<button type="submit" th:formaction="@{/solicitud/exportar/pdf}"
+									class="main-btn primary-btn btn-hover btn-sm">
+									<i class="lni lni-download me-1"></i> PDF
+								</button>
+							</div>
+						</form>
+					</div>
+					<div class="card-style mb-30">
 						<div
 							class="d-flex align-items-center justify-content-between mb-20">
 							<h6 class="mb-0">Lista Solicitudes</h6>
-							<a th:href="@{/solicitud/crearSolicitud}"
-								class="main-btn primary-btn btn-hover btn-sm"> <i
-								class="lni lni-plus me-1"></i> Crear Solicitud
-							</a>
+							<div class="d-flex align-items-center gap-3">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox"
+										id="verEliminadas" th:checked="${verEliminadas}"
+										onchange="toggleEliminadas(this)">
+									<label class="form-check-label" for="verEliminadas">Visualizar
+										Solicitudes Eliminadas</label>
+								</div>
+								<a th:href="@{/solicitud/crearSolicitud}"
+									class="main-btn primary-btn btn-hover btn-sm"> <i
+									class="lni lni-plus me-1"></i> Crear Solicitud
+								</a>
+							</div>
 						</div>
 						<div class="table-wrapper table-responsive">
 							<table class="table">
@@ -56,20 +100,46 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="indice: ${listasolicitudes}">
-										<td th:text="${indice.idSolicitud}"></td>
+									<tr th:each="indice: ${listasolicitudes}"
+										th:with="puedeGestionarAprobada=${session.usuarioLogueado.idUsuario == indice.idUsuario or session.usuarioLogueado.idUsuario == indice.idAprobador or #strings.equalsIgnoreCase(session.usuarioLogueado.nombreRol, 'Administrador')},
+											esDueno=${session.usuarioLogueado.idUsuario == indice.idUsuario},
+											estaActiva=${indice.activo != false and !#lists.contains(idsArchivadosPorMi, indice.idSolicitud)},
+											claseEstado=${#strings.equalsIgnoreCase(indice.nombreEstado, 'Aprobada')} ? 'badge-aprobada' : (${#strings.equalsIgnoreCase(indice.nombreEstado, 'Rechazada')} ? 'badge-rechazada' : (${#strings.equalsIgnoreCase(indice.nombreEstado, 'Cancelada')} ? 'badge-cancelada' : 'badge-pendiente'))">
+										<td th:text="${indice.numeroSolicitud}"></td>
 										<td
 											th:text="${indice.nombresUsuario} + ' ' + ${indice.apellidosUsuario}"></td>
 										<td th:text="${indice.fechaInicio}"></td>
 										<td th:text="${indice.fechaFin}"></td>
 										<td th:text="${indice.diasSolicitados}"></td>
 										<td th:text="${indice.motivo}"></td>
-										<td th:text="${indice.nombreEstado}"></td>
+										<td><span class="badge-estado" th:classappend="${claseEstado}"
+												th:text="${estaActiva} ? ${indice.nombreEstado} : 'Archivada'"></span>
+										</td>
 										<td th:text="${indice.nombresAprobador}"></td>
 										<td>
-											<a th:href="@{/solicitud/editarSolicitud/{id}(id=${indice.idSolicitud})}"
+											<button th:if="${(#strings.equalsIgnoreCase(indice.nombreEstado, 'Rechazada') or #strings.equalsIgnoreCase(indice.nombreEstado, 'Cancelada'))}"
+												type="button" class="btn btn-light btn-ver-motivo"
+												th:attr="data-motivo=${indice.observacionesAprobador},data-estado=${indice.nombreEstado},data-responsable=${#strings.equalsIgnoreCase(indice.nombreEstado, 'Cancelada')} ? ${indice.nombresCanceladoPor} : ${indice.nombresAprobador}"
+												onclick="mostrarMotivo(this)"><i class="lni lni-eye me-1"></i> Ver motivo</button>
+											<a th:if="${#strings.equalsIgnoreCase(indice.nombreEstado, 'Pendiente') and estaActiva}"
+												th:href="@{/solicitud/editarSolicitud/{id}(id=${indice.idSolicitud})}"
 												class="btn btn-light"><i class="lni lni-pencil"></i></a>
-											<form th:action="@{/solicitud/desactivar/{id}(id=${indice.idSolicitud})}"
+											<a th:if="${#strings.equalsIgnoreCase(indice.nombreEstado, 'Aprobada') and esDueno and estaActiva}"
+												th:href="@{/solicitud/reprogramar/{id}(id=${indice.idSolicitud},origen='lista')}"
+												class="btn btn-light"><i class="lni lni-pencil me-1"></i> Reprogramar</a>
+											<form th:if="${#strings.equalsIgnoreCase(indice.nombreEstado, 'Aprobada') and puedeGestionarAprobada and estaActiva}"
+												th:action="@{/solicitud/cancelarAprobacion/{id}(id=${indice.idSolicitud})}"
+												method="post" class="d-inline-flex gap-1 align-items-center">
+												<input type="hidden" name="origen" value="lista">
+												<input type="text" name="observaciones"
+													class="form-control form-control-sm motivo-cancelacion"
+													style="width: 150px; display: none;"
+													placeholder="Motivo de la cancelación" maxlength="50" required>
+												<button type="submit" class="btn btn-light text-danger"
+													onclick="return revelarMotivoCancelacion(event, this)"><i
+													class="lni lni-close me-1"></i> Cancelar aprobación</button>
+											</form>
+											<form th:if="${estaActiva}" th:action="@{/solicitud/archivar/{id}(id=${indice.idSolicitud})}"
 												method="post" style="display: inline;">
 												<button type="submit" class="btn btn-light"><i
 													class="lni lni-trash-can"></i></button>
@@ -83,6 +153,56 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="modal fade" id="modalMotivo" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h6 class="modal-title" id="tituloMotivo">Motivo del rechazo</h6>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+					</div>
+					<div class="modal-body">
+						<p id="textoMotivo" class="mb-0 text-dark"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			function mostrarMotivo(boton) {
+				var motivo = boton.getAttribute('data-motivo') || 'No se registró un motivo.';
+				var responsable = boton.getAttribute('data-responsable');
+				var estado = boton.getAttribute('data-estado');
+				var texto = responsable ? (responsable.toUpperCase() + ': ' + motivo) : motivo;
+				document.getElementById('textoMotivo').textContent = texto;
+				document.getElementById('tituloMotivo').textContent = estado === 'Cancelada'
+					? 'Motivo de la cancelación' : 'Motivo del rechazo';
+				var modal = new bootstrap.Modal(document.getElementById('modalMotivo'));
+				modal.show();
+			}
+
+			function toggleEliminadas(checkbox) {
+				var url = new URL(window.location.href);
+				if (checkbox.checked) {
+					url.searchParams.set('verEliminadas', 'true');
+				} else {
+					url.searchParams.delete('verEliminadas');
+				}
+				window.location.href = url.toString();
+			}
+
+			function revelarMotivoCancelacion(event, boton) {
+				var form = boton.closest('form');
+				var input = form.querySelector('.motivo-cancelacion');
+				if (input.style.display === 'none') {
+					event.preventDefault();
+					input.style.display = 'inline-block';
+					input.focus();
+					return false;
+				}
+				return true;
+			}
+		</script>
 
 	</div>
 </body>

@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.siav_pisip.siav_web.model.dto.request.NotificacionRequestDto;
 import com.siav_pisip.siav_web.model.dto.response.NotificacionResponseDto;
+import com.siav_pisip.siav_web.model.dto.response.UsuarioResponseDto;
 import com.siav_pisip.siav_web.service.INotificacionService;
 import com.siav_pisip.siav_web.service.ISolicitudService;
 import com.siav_pisip.siav_web.service.IUsuarioService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/notificacion")
@@ -31,9 +34,12 @@ public class NotificacionController {
 	private ISolicitudService servicioSolicitud;
 
 	@GetMapping
-	public String leerpagina(Model model) {
-		List<NotificacionResponseDto> notificacionesBD = servicioNotificacion.listarNotificaciones();
+	public String leerpagina(Model model, HttpSession session) {
+		UsuarioResponseDto usuarioLogueado = (UsuarioResponseDto) session.getAttribute("usuarioLogueado");
+		List<NotificacionResponseDto> notificacionesBD = servicioNotificacion.listarNotificaciones().stream()
+				.filter(n -> usuarioLogueado.getIdUsuario().equals(n.getIdUsuarioDestino())).toList();
 		model.addAttribute("listanotificaciones", notificacionesBD);
+		model.addAttribute("esAdministrador", "Administrador".equalsIgnoreCase(usuarioLogueado.getNombreRol()));
 		return "notificacion/listarNotificacion";
 	}
 

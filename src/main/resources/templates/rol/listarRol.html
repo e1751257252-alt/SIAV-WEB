@@ -19,7 +19,7 @@
 					<div class="breadcrumb-wrapper">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/index}">Página Principal</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Roles</li>
 							</ol>
 						</nav>
@@ -28,6 +28,9 @@
 			</div>
 		</div>
 
+		<div th:if="${errorMensaje}" class="alert alert-danger" role="alert"
+			th:text="${errorMensaje}"></div>
+
 		<div class="tables-wrapper">
 			<div class="row">
 				<div class="col-12">
@@ -35,6 +38,10 @@
 						<div
 							class="d-flex align-items-center justify-content-between mb-20">
 							<h6 class="mb-0">Lista Roles</h6>
+							<a th:href="@{/rol/crearRol}"
+								class="main-btn primary-btn btn-hover btn-sm"> <i
+								class="lni lni-plus me-1"></i> Crear Rol
+							</a>
 						</div>
 						<div class="table-wrapper table-responsive">
 							<table class="table">
@@ -43,6 +50,7 @@
 										<th>#</th>
 										<th>Nombre Rol</th>
 										<th>Descripción</th>
+										<th>Acciones</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -50,6 +58,15 @@
 										<td th:text="${indice.idRol}"></td>
 										<td th:text="${indice.nombreRol}"></td>
 										<td th:text="${indice.descripcion}"></td>
+										<td>
+											<a th:href="@{/rol/editarRol/{id}(id=${indice.idRol})}"
+												class="btn btn-light"><i class="lni lni-pencil"></i></a>
+											<form th:action="@{/rol/desactivar/{id}(id=${indice.idRol})}"
+												method="post" style="display: inline;">
+												<button type="submit" class="btn btn-light"><i
+													class="lni lni-trash-can"></i></button>
+											</form>
+										</td>
 									</tr>
 								</tbody>
 							</table>

@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="/plantilla/plantillaui">
 <head>
-<title>Crear Solicitud</title>
+<title>Reprogramar Solicitud</title>
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
@@ -12,7 +12,7 @@
 			<div class="row align-items-center">
 				<div class="col-md-6">
 					<div class="title">
-						<h2>Crear Solicitud</h2>
+						<h2>Reprogramar Solicitud</h2>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -21,7 +21,7 @@
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a th:href="@{/index}">Página Principal</a></li>
 								<li class="breadcrumb-item"><a th:href="@{/solicitud}">Solicitudes</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Crear</li>
+								<li class="breadcrumb-item active" aria-current="page">Reprogramar</li>
 							</ol>
 						</nav>
 					</div>
@@ -34,34 +34,41 @@
 
 		<div class="card-style mb-30">
 			<p>
-				Jefe que aprobará esta solicitud: <strong
-					th:text="${nombreJefe} ?: 'no tienes un jefe asignado, consulta con el administrador'"></strong>
+				Al reprogramar, la solicitud vuelve a estado <strong>Pendiente</strong>
+				y el jefe deberá aprobarla nuevamente con las nuevas fechas. Los días
+				reservados con las fechas anteriores se devuelven a tu saldo.
 			</p>
-			<form th:action="@{/solicitud/guardar}" th:object="${solicitud}"
+			<form th:action="@{/solicitud/reprogramar/{id}(id=${solicitud.idSolicitud})}"
 				method="post">
+				<input type="hidden" name="origen" th:value="${origen}">
 				<div class="mb-3">
 					<label for="fechaInicio">Fecha Inicio</label> <input type="date"
-						th:field="*{fechaInicio}" class="form-control" id="fechaInicio">
+						name="fechaInicio" th:value="${solicitud.fechaInicio}"
+						class="form-control" id="fechaInicio" required>
 				</div>
 				<div class="mb-3">
 					<label for="fechaFin">Fecha Fin</label> <input type="date"
-						th:field="*{fechaFin}" class="form-control" id="fechaFin">
+						name="fechaFin" th:value="${solicitud.fechaFin}" class="form-control"
+						id="fechaFin" required>
 				</div>
 				<div class="mb-3">
 					<label for="diasSolicitados">Días Solicitados</label> <input
-						type="number" th:field="*{diasSolicitados}" class="form-control"
+						type="number" name="diasSolicitados"
+						th:value="${solicitud.diasSolicitados}" class="form-control"
 						id="diasSolicitados" readonly>
 				</div>
 				<div class="mb-3">
-					<label for="motivo">Motivo</label> <input type="text"
-						th:field="*{motivo}" class="form-control" id="motivo" maxlength="50">
+					<label for="motivo">Motivo de la reprogramación</label> <input
+						type="text" name="motivo" class="form-control" id="motivo"
+						placeholder="Explica por qué necesitas cambiar las fechas"
+						maxlength="50" required>
 				</div>
 				<div class="d-flex gap-3">
 					<button type="submit" class="main-btn primary-btn btn-hover">
-						<i class="lni lni-save me-1"></i> Guardar
+						<i class="lni lni-save me-1"></i> Reprogramar
 					</button>
-					<a th:href="@{/solicitud}" class="btn-cancel">
-						<i class="lni lni-close me-1"></i> Cancelar
+					<a th:href="${origen == 'equipo'} ? @{/solicitud/miEquipo} : @{/solicitud}"
+						class="btn-cancel"> <i class="lni lni-close me-1"></i> Cancelar
 					</a>
 				</div>
 			</form>
@@ -74,7 +81,6 @@
 				var maximaTexto = maxima.toISOString().split('T')[0];
 				document.getElementById('fechaInicio').setAttribute('max', maximaTexto);
 				document.getElementById('fechaFin').setAttribute('max', maximaTexto);
-				document.getElementById('fechaInicio').setAttribute('min', hoy.toISOString().split('T')[0]);
 			})();
 
 			function calcularDias() {

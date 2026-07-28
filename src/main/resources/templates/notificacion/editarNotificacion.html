@@ -19,7 +19,7 @@
 					<div class="breadcrumb-wrapper">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/index}">Página Principal</a></li>
 								<li class="breadcrumb-item"><a th:href="@{/notificacion}">Notificaciones</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Editar</li>
 							</ol>
@@ -28,6 +28,9 @@
 				</div>
 			</div>
 		</div>
+
+		<div th:if="${errorMensaje}" class="alert alert-danger" role="alert"
+			th:text="${errorMensaje}"></div>
 
 		<div class="card-style mb-30">
 			<form th:action="@{/notificacion/guardar}"
@@ -55,20 +58,25 @@
 				<div class="mb-3">
 					<label for="tipoNotificacion">Tipo de Notificación</label> <input
 						type="text" th:field="*{tipoNotificacion}" class="form-control"
-						id="tipoNotificacion">
+						id="tipoNotificacion" maxlength="30">
 				</div>
 				<div class="mb-3">
 					<label for="mensaje">Mensaje</label> <input type="text"
-						th:field="*{mensaje}" class="form-control" id="mensaje">
+						th:field="*{mensaje}" class="form-control" id="mensaje" maxlength="100">
 				</div>
 				<div class="mb-3 form-check">
 					<input type="checkbox" class="form-check-input" id="leido"
 						th:field="*{leido}"> <label class="form-check-label"
 						for="leido">Leído</label>
 				</div>
-				<button type="submit" class="main-btn primary-btn btn-hover">
-					<i class="lni lni-save me-1"></i> Guardar
-				</button>
+				<div class="d-flex gap-3">
+					<button type="submit" class="main-btn primary-btn btn-hover">
+						<i class="lni lni-save me-1"></i> Guardar
+					</button>
+					<a th:href="@{/notificacion}" class="btn-cancel">
+						<i class="lni lni-close me-1"></i> Cancelar
+					</a>
+				</div>
 			</form>
 		</div>
 

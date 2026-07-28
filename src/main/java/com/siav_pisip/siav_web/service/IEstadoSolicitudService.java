@@ -9,5 +9,9 @@ public interface IEstadoSolicitudService {
 
 	List<EstadoSolicitudResponseDto> listarEstadosSolicitud();
 
+	EstadoSolicitudResponseDto buscarPorId(Long idEstado);
+
 	void guardarEstadoSolicitud(EstadoSolicitudRequestDto nuevoEstado);
+
+	void desactivarEstadoSolicitud(Long idEstado);
 }

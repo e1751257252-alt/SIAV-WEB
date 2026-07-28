@@ -19,7 +19,7 @@
 					<div class="breadcrumb-wrapper">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a th:href="@{/index}">Dashboard</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/index}">Página Principal</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Notificaciones</li>
 							</ol>
 						</nav>
@@ -35,7 +35,7 @@
 						<div
 							class="d-flex align-items-center justify-content-between mb-20">
 							<h6 class="mb-0">Lista Notificaciones</h6>
-							<a th:href="@{/notificacion/crearNotificacion}"
+							<a th:if="${esAdministrador}" th:href="@{/notificacion/crearNotificacion}"
 								class="main-btn primary-btn btn-hover btn-sm"> <i
 								class="lni lni-plus me-1"></i> Crear Notificación
 							</a>
@@ -44,32 +44,21 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th>#</th>
 										<th>Usuario Destino</th>
 										<th>ID Solicitud</th>
 										<th>Tipo</th>
 										<th>Mensaje</th>
-										<th>Leído</th>
-										<th>Acciones</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each="indice: ${listanotificaciones}">
-										<td th:text="${indice.idNotificacion}"></td>
 										<td th:text="${indice.nombresUsuarioDestino}"></td>
 										<td th:text="${indice.idSolicitud}"></td>
 										<td th:text="${indice.tipoNotificacion}"></td>
 										<td th:text="${indice.mensaje}"></td>
-										<td th:text="${indice.leido}"></td>
-										<td>
-											<a th:href="@{/notificacion/editarNotificacion/{id}(id=${indice.idNotificacion})}"
-												class="btn btn-light"><i class="lni lni-pencil"></i></a>
-											<form th:action="@{/notificacion/desactivar/{id}(id=${indice.idNotificacion})}"
-												method="post" style="display: inline;">
-												<button type="submit" class="btn btn-light"><i
-													class="lni lni-trash-can"></i></button>
-											</form>
-										</td>
+									</tr>
+									<tr th:if="${#lists.isEmpty(listanotificaciones)}">
+										<td colspan="4" class="text-center">No tienes notificaciones.</td>
 									</tr>
 								</tbody>
 							</table>
