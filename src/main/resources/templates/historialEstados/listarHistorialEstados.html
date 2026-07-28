@@ -29,6 +29,9 @@
 			</div>
 		</div>
 
+		<div th:if="${errorMensaje}" class="alert alert-danger" role="alert"
+			th:text="${errorMensaje}"></div>
+
 		<div class="tables-wrapper">
 			<div class="row">
 				<div class="col-12">
@@ -52,6 +55,7 @@
 										<th>Responsable</th>
 										<th>Fecha Cambio</th>
 										<th>Observaciones</th>
+										<th>Estado</th>
 										<th>Acciones</th>
 									</tr>
 								</thead>
@@ -66,6 +70,11 @@
 										<td th:text="${indice.nombresUsuarioResponsable}"></td>
 										<td th:text="${indice.fechaCambio}"></td>
 										<td th:text="${indice.observaciones}"></td>
+										<td>
+											<span
+												th:class="${indice.activo} ? 'badge-estado badge-activo' : 'badge-estado badge-inactivo'"
+												th:text="${indice.activo} ? 'Activo' : 'Inactivo'"></span>
+										</td>
 										<td>
 											<a th:href="@{/historialEstados/editarHistorialEstados/{id}(id=${indice.idHistorial})}"
 												class="btn btn-light"><i class="lni lni-pencil"></i></a>

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.siav_pisip.siav_web.controller")
 public class WebGlobalExceptionHandler {
 
 	@ExceptionHandler(BindException.class)

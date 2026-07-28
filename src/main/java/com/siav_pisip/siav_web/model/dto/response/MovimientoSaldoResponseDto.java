@@ -14,4 +14,5 @@ public class MovimientoSaldoResponseDto {
 	private Integer dias;
 	private LocalDateTime fechaMovimiento;
 	private String descripcion;
+	private Boolean activo;
 }

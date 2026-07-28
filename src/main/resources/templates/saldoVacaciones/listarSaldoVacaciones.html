@@ -29,6 +29,9 @@
 			</div>
 		</div>
 
+		<div th:if="${errorMensaje}" class="alert alert-danger" role="alert"
+			th:text="${errorMensaje}"></div>
+
 		<div class="tables-wrapper">
 			<div class="row">
 				<div class="col-12">
@@ -50,6 +53,7 @@
 										<th>Año</th>
 										<th>Días Asignados</th>
 										<th>Días Disponibles</th>
+										<th>Estado</th>
 										<th>Acciones</th>
 									</tr>
 								</thead>
@@ -61,6 +65,11 @@
 										<td th:text="${indice.anio}"></td>
 										<td th:text="${indice.diasAsignados}"></td>
 										<td th:text="${indice.diasDisponibles}"></td>
+										<td>
+											<span
+												th:class="${indice.activo} ? 'badge-estado badge-activo' : 'badge-estado badge-inactivo'"
+												th:text="${indice.activo} ? 'Activo' : 'Inactivo'"></span>
+										</td>
 										<td>
 											<a th:href="@{/saldoVacaciones/editarSaldoVacaciones/{id}(id=${indice.idSaldo})}"
 												class="btn btn-light"><i class="lni lni-pencil"></i></a>

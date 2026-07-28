@@ -16,4 +16,5 @@ public class SaldoVacacionesResponseDto {
 	private BigDecimal diasAsignados;
 	private BigDecimal diasDisponibles;
 	private LocalDateTime fechaActualizacion;
+	private Boolean activo;
 }
