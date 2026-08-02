@@ -39,10 +39,11 @@
 						<div
 							class="d-flex align-items-center justify-content-between mb-20">
 							<h6 class="mb-0">Lista Movimientos de Saldo</h6>
-							<a th:href="@{/movimientoSaldo/crearMovimientoSaldo}"
-								class="main-btn primary-btn btn-hover btn-sm"> <i
-								class="lni lni-plus me-1"></i> Crear Movimiento
-							</a>
+							<span class="text-muted" style="font-size: 0.8rem;">
+								<i class="lni lni-shield me-1"></i> Se registra
+								automáticamente con cada aprobación, rechazo, cancelación o
+								reprogramación de solicitudes.
+							</span>
 						</div>
 						<div class="table-wrapper table-responsive">
 							<table class="table">
@@ -74,8 +75,6 @@
 												th:text="${indice.activo} ? 'Activo' : 'Inactivo'"></span>
 										</td>
 										<td>
-											<a th:href="@{/movimientoSaldo/editarMovimientoSaldo/{id}(id=${indice.idMovimiento})}"
-												class="btn btn-light"><i class="lni lni-pencil"></i></a>
 											<form th:action="@{/movimientoSaldo/desactivar/{id}(id=${indice.idMovimiento})}"
 												method="post" style="display: inline;">
 												<button type="submit" class="btn btn-light"><i

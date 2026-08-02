@@ -156,6 +156,10 @@
 							class="lni lni-users"></i></span> <span class="text">Usuarios</span>
 				</a></li>
 				<li class="nav-item" th:if="${#strings.equalsIgnoreCase(rol,'Administrador')}">
+					<a th:href="@{/cargo}"> <span class="icon"><i
+							class="lni lni-briefcase"></i></span> <span class="text">Cargos</span>
+				</a></li>
+				<li class="nav-item" th:if="${#strings.equalsIgnoreCase(rol,'Administrador')}">
 					<a th:href="@{/estadoSolicitud}"> <span class="icon"><i
 							class="lni lni-tag"></i></span> <span class="text">Estado
 							Solicitud</span>
@@ -229,7 +233,9 @@
 								</button>
 								<ul class="dropdown-menu dropdown-menu-end"
 									aria-labelledby="profile">
-									<li><a th:href="@{/login}"><i class="lni lni-exit"></i>
+									<li><a th:href="@{/perfil/cambiarPassword}"><i
+											class="lni lni-key"></i> Cambiar Contraseña</a></li>
+									<li><a th:href="@{/logout}"><i class="lni lni-exit"></i>
 											Cerrar Sesión</a></li>
 								</ul>
 							</div>

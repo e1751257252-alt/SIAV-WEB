@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="/plantilla/plantillaui">
 <head>
-<title>Usuarios</title>
+<title>Cargos</title>
 </head>
 <body>
 	<div layout:fragment="cargarpaginas">
@@ -12,7 +12,7 @@
 			<div class="row align-items-center">
 				<div class="col-md-6">
 					<div class="title">
-						<h2>Usuarios</h2>
+						<h2>Cargos</h2>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -20,7 +20,7 @@
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a th:href="@{/index}">Página Principal</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+								<li class="breadcrumb-item active" aria-current="page">Cargos</li>
 							</ol>
 						</nav>
 					</div>
@@ -28,16 +28,19 @@
 			</div>
 		</div>
 
+		<div th:if="${errorMensaje}" class="alert alert-danger" role="alert"
+			th:text="${errorMensaje}"></div>
+
 		<div class="tables-wrapper">
 			<div class="row">
 				<div class="col-12">
 					<div class="card-style mb-30">
 						<div
 							class="d-flex align-items-center justify-content-between mb-20">
-							<h6 class="mb-0">Lista Usuarios</h6>
-							<a th:href="@{/usuario/crearUsuario}"
+							<h6 class="mb-0">Lista Cargos</h6>
+							<a th:href="@{/cargo/crearCargo}"
 								class="main-btn primary-btn btn-hover btn-sm"> <i
-								class="lni lni-plus me-1"></i> Crear Usuario
+								class="lni lni-plus me-1"></i> Crear Cargo
 							</a>
 						</div>
 						<div class="table-wrapper table-responsive">
@@ -45,36 +48,20 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Cédula</th>
-										<th>Nombres</th>
-										<th>Apellidos</th>
-										<th>Email</th>
-										<th>Rol</th>
-										<th>Jefe</th>
-										<th>Cargo</th>
-										<th>Estado</th>
+										<th>Nombre Cargo</th>
+										<th>Descripción</th>
 										<th>Acciones</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="indice: ${listausuarios}">
-										<td th:text="${indice.idUsuario}"></td>
-										<td th:text="${indice.cedula}"></td>
-										<td th:text="${indice.nombres}"></td>
-										<td th:text="${indice.apellidos}"></td>
-										<td th:text="${indice.email}"></td>
-										<td th:text="${indice.nombreRol}"></td>
-										<td th:text="${indice.nombreJefe}"></td>
+									<tr th:each="indice: ${listacargos}">
+										<td th:text="${indice.idCargo}"></td>
 										<td th:text="${indice.nombreCargo}"></td>
+										<td th:text="${indice.descripcion}"></td>
 										<td>
-											<span
-												th:class="${indice.activo} ? 'badge-estado badge-activo' : 'badge-estado badge-inactivo'"
-												th:text="${indice.activo} ? 'Activo' : 'Inactivo'"></span>
-										</td>
-										<td>
-											<a th:href="@{/usuario/editarUsuario/{id}(id=${indice.idUsuario})}"
+											<a th:href="@{/cargo/editarCargo/{id}(id=${indice.idCargo})}"
 												class="btn btn-light"><i class="lni lni-pencil"></i></a>
-											<form th:action="@{/usuario/desactivar/{id}(id=${indice.idUsuario})}"
+											<form th:action="@{/cargo/desactivar/{id}(id=${indice.idCargo})}"
 												method="post" style="display: inline;">
 												<button type="submit" class="btn btn-light"><i
 													class="lni lni-trash-can"></i></button>

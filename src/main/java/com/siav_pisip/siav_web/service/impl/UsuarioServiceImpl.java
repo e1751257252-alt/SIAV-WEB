@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import com.siav_pisip.siav_web.model.dto.request.CambiarPasswordRequestDto;
 import com.siav_pisip.siav_web.model.dto.request.LoginRequestDto;
 import com.siav_pisip.siav_web.model.dto.request.UsuarioRequestDto;
 import com.siav_pisip.siav_web.model.dto.response.UsuarioResponseDto;
@@ -52,6 +53,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		} catch (WebClientResponseException.Unauthorized ex) {
 			return null;
 		}
+	}
+
+	@Override
+	public UsuarioResponseDto cambiarPassword(Long idUsuario, String passwordActual, String passwordNueva) {
+		CambiarPasswordRequestDto request = new CambiarPasswordRequestDto();
+		request.setPasswordActual(passwordActual);
+		request.setPasswordNueva(passwordNueva);
+		return webclient.post().uri("/usuario/{id}/password", idUsuario).bodyValue(request).retrieve()
+				.bodyToMono(UsuarioResponseDto.class).block();
 	}
 
 }

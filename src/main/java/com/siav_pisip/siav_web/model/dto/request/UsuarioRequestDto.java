@@ -9,13 +9,14 @@ public class UsuarioRequestDto {
 
 	private Long idUsuario;
 	private String cedula;
+	private String tipoDocumento;
 	private String nombres;
 	private String apellidos;
 	private String email;
 	private String passwordHash;
 	private Long idRol;
 	private Long idJefe;
-	private String cargo;
+	private Long idCargo;
 	private LocalDate fechaIngreso;
 	private Boolean activo;
 }

@@ -36,10 +36,18 @@
 			<form th:action="@{/usuario/guardar}" th:object="${usuario}"
 				method="post">
 				<div class="mb-3">
-					<label for="cedula">Cédula</label> <input type="text"
-						th:field="*{cedula}" class="form-control" id="cedula" maxlength="10"
-						inputmode="numeric" pattern="[0-9]{10}" data-solo-numeros="true"
-						title="La cédula debe tener exactamente 10 dígitos numéricos" required>
+					<label for="tipoDocumento">Tipo de documento</label>
+					<select th:field="*{tipoDocumento}" class="form-control"
+						id="tipoDocumento">
+						<option value="CEDULA">Cédula</option>
+						<option value="PASAPORTE">Pasaporte</option>
+					</select>
+				</div>
+				<div class="mb-3">
+					<label for="cedula">Número de documento</label> <input type="text"
+						th:field="*{cedula}" class="form-control" id="cedula" maxlength="20"
+						title="Cédula: 10 dígitos numéricos. Pasaporte: 5 a 20 caracteres alfanuméricos."
+						required>
 				</div>
 				<div class="mb-3">
 					<label for="nombres">Nombres</label> <input type="text"
@@ -75,8 +83,12 @@
 					</select>
 				</div>
 				<div class="mb-3">
-					<label for="cargo">Cargo</label> <input type="text"
-						th:field="*{cargo}" class="form-control" id="cargo" maxlength="50">
+					<label for="idCargo">Cargo</label>
+					<select th:field="*{idCargo}" class="form-control" id="idCargo">
+						<option value="">Seleccione un cargo</option>
+						<option th:each="cargo : ${listacargos}" th:value="${cargo.idCargo}"
+							th:text="${cargo.nombreCargo}"></option>
+					</select>
 				</div>
 				<div class="mb-3">
 					<label for="fechaIngreso">Fecha de Ingreso</label> <input
@@ -98,6 +110,13 @@
 				</div>
 			</form>
 		</div>
+
+		<script>
+			(function limitarFechaIngreso() {
+				var hoy = new Date().toISOString().split('T')[0];
+				document.getElementById('fechaIngreso').setAttribute('max', hoy);
+			})();
+		</script>
 
 	</div>
 </body>

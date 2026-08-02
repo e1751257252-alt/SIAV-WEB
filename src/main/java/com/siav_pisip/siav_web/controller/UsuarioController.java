@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.siav_pisip.siav_web.model.dto.request.UsuarioRequestDto;
 import com.siav_pisip.siav_web.model.dto.response.UsuarioResponseDto;
+import com.siav_pisip.siav_web.service.ICargoService;
 import com.siav_pisip.siav_web.service.IRolService;
 import com.siav_pisip.siav_web.service.IUsuarioService;
 
@@ -26,6 +27,9 @@ public class UsuarioController {
 	@Autowired
 	private IRolService servicioRol;
 
+	@Autowired
+	private ICargoService servicioCargo;
+
 	@GetMapping
 	public String leerpagina(Model model) {
 		List<UsuarioResponseDto> usuariosBD = servicioUsuario.listarUsuarios();
@@ -38,6 +42,7 @@ public class UsuarioController {
 		model.addAttribute("usuario", new UsuarioRequestDto());
 		model.addAttribute("listaroles", servicioRol.listarRoles());
 		model.addAttribute("listajefes", servicioUsuario.listarUsuarios());
+		model.addAttribute("listacargos", servicioCargo.listarCargos());
 		return "usuario/crearUsuario";
 	}
 
@@ -53,17 +58,19 @@ public class UsuarioController {
 		UsuarioRequestDto usuario = new UsuarioRequestDto();
 		usuario.setIdUsuario(existente.getIdUsuario());
 		usuario.setCedula(existente.getCedula());
+		usuario.setTipoDocumento(existente.getTipoDocumento());
 		usuario.setNombres(existente.getNombres());
 		usuario.setApellidos(existente.getApellidos());
 		usuario.setEmail(existente.getEmail());
 		usuario.setIdRol(existente.getIdRol());
 		usuario.setIdJefe(existente.getIdJefe());
-		usuario.setCargo(existente.getCargo());
+		usuario.setIdCargo(existente.getIdCargo());
 		usuario.setFechaIngreso(existente.getFechaIngreso());
 		usuario.setActivo(existente.getActivo());
 		model.addAttribute("usuario", usuario);
 		model.addAttribute("listaroles", servicioRol.listarRoles());
 		model.addAttribute("listajefes", servicioUsuario.listarUsuarios());
+		model.addAttribute("listacargos", servicioCargo.listarCargos());
 		return "usuario/editarUsuario";
 	}
 

@@ -39,10 +39,10 @@
 						<div
 							class="d-flex align-items-center justify-content-between mb-20">
 							<h6 class="mb-0">Lista Historial de Estados</h6>
-							<a th:href="@{/historialEstados/crearHistorialEstados}"
-								class="main-btn primary-btn btn-hover btn-sm"> <i
-								class="lni lni-plus me-1"></i> Crear Historial
-							</a>
+							<span class="text-muted" style="font-size: 0.8rem;">
+								<i class="lni lni-shield me-1"></i> Se registra
+								automáticamente con cada cambio de estado de una solicitud.
+							</span>
 						</div>
 						<div class="table-wrapper table-responsive">
 							<table class="table">
@@ -76,8 +76,6 @@
 												th:text="${indice.activo} ? 'Activo' : 'Inactivo'"></span>
 										</td>
 										<td>
-											<a th:href="@{/historialEstados/editarHistorialEstados/{id}(id=${indice.idHistorial})}"
-												class="btn btn-light"><i class="lni lni-pencil"></i></a>
 											<form th:action="@{/historialEstados/desactivar/{id}(id=${indice.idHistorial})}"
 												method="post" style="display: inline;">
 												<button type="submit" class="btn btn-light"><i

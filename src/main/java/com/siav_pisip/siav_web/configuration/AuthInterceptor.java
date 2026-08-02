@@ -19,6 +19,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 			Map.entry("/solicitud/miEquipo", List.of("JEFE", "ADMINISTRADOR")),
 			Map.entry("/rol", List.of("ADMINISTRADOR")),
 			Map.entry("/usuario", List.of("ADMINISTRADOR")),
+			Map.entry("/cargo", List.of("ADMINISTRADOR")),
 			Map.entry("/estadoSolicitud", List.of("ADMINISTRADOR")),
 			Map.entry("/saldoVacaciones", List.of("ADMINISTRADOR")),
 			Map.entry("/movimientoSaldo", List.of("ADMINISTRADOR")),
@@ -28,9 +29,22 @@ public class AuthInterceptor implements HandlerInterceptor {
 			Map.entry("/notificacion/guardar", List.of("ADMINISTRADOR")),
 			Map.entry("/notificacion/desactivar", List.of("ADMINISTRADOR")));
 
+	// Rutas accesibles aunque el usuario todavía tenga pendiente el cambio de
+	// contraseña obligatorio (la propia pantalla de cambio, y el logout).
+	private static final List<String> RUTAS_PERMITIDAS_CON_CAMBIO_PENDIENTE = List.of("/perfil/cambiarPassword",
+			"/logout");
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		// Toda página que pasa por este interceptor está detrás de sesión: se
+		// marca como no cacheable para que el botón "atrás" del navegador no
+		// la muestre desde caché después de cerrar sesión (siempre revalida
+		// contra el servidor, que redirige a /login si ya no hay sesión).
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setDateHeader("Expires", 0);
+
 		HttpSession session = request.getSession(false);
 		UsuarioResponseDto usuarioLogueado = session == null ? null
 				: (UsuarioResponseDto) session.getAttribute("usuarioLogueado");
@@ -40,7 +54,15 @@ public class AuthInterceptor implements HandlerInterceptor {
 			return false;
 		}
 
-		String rutaRestringida = rutaRestringidaMasEspecifica(request.getRequestURI());
+		String uri = request.getRequestURI();
+
+		if (Boolean.TRUE.equals(usuarioLogueado.getDebeCambiarPassword())
+				&& RUTAS_PERMITIDAS_CON_CAMBIO_PENDIENTE.stream().noneMatch(uri::startsWith)) {
+			response.sendRedirect("/perfil/cambiarPassword?primerIngreso=true");
+			return false;
+		}
+
+		String rutaRestringida = rutaRestringidaMasEspecifica(uri);
 		if (rutaRestringida != null && !rolPermitido(rutaRestringida, usuarioLogueado.getNombreRol())) {
 			response.sendRedirect("/index?accesoDenegado=true");
 			return false;

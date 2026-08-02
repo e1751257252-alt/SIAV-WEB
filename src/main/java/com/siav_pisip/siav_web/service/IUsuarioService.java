@@ -16,4 +16,6 @@ public interface IUsuarioService {
 	void desactivarUsuario(Long idUsuario);
 
 	UsuarioResponseDto autenticar(String email, String password);
+
+	UsuarioResponseDto cambiarPassword(Long idUsuario, String passwordActual, String passwordNueva);
 }
