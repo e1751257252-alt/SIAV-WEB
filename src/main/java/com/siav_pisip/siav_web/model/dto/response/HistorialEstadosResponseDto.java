@@ -9,8 +9,10 @@ public class HistorialEstadosResponseDto {
 
 	private Long idHistorial;
 	private Long idSolicitud;
-	private EstadoSolicitudResponseDto estadoAnterior;
-	private EstadoSolicitudResponseDto estadoNuevo;
+	private Long idEstadoAnterior;
+	private String nombreEstadoAnterior;
+	private Long idEstadoNuevo;
+	private String nombreEstadoNuevo;
 	private Long idUsuarioResponsable;
 	private String nombresUsuarioResponsable;
 	private LocalDateTime fechaCambio;
